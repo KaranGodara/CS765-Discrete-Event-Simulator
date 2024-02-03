@@ -29,7 +29,7 @@ class Simulator:
     # Creating peers and adding them in the peer dict of simulator
     def create_peers(self):
         for id in range(1, self.n + 1):
-            self.peer_dict[id] = (Peer(id, self.generate_RV(self.z0 / 100.0), self.generate_RV(self.z1 / 100.0), self.T_tx, self.env))
+            self.peer_dict[id] = (Peer(id, self.generate_RV(self.z0 / 100.0), self.generate_RV(self.z1 / 100.0), self.T_tx, self.n, self.env))
 
     # This function checks if given edge list representation forms a connected graph or not
     def check_connectivity(self, edge_list):
@@ -128,6 +128,7 @@ class Simulator:
             # Checking if graph is connected
             grph_made = self.check_connectivity(edge_list)
         print("Graph made successfully")
+        print(edge_list)
         return edge_list
 
     # This function would actually materialise the connections of the p2p network

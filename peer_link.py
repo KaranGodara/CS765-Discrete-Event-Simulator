@@ -1,8 +1,5 @@
 import random 
 import numpy as np
-import hashlib
-
-from transaction import Transaction
 
 class Peer_Link :
     def __init__(self, sender, receiver, env):
@@ -17,26 +14,21 @@ class Peer_Link :
             self.c_ij = 5
         self.d_ij_mean = (96.0/self.c_ij)
 
-    def send_txn(self, m_size = 1, coins = 5): # m_size is in KBps (default is 1KB)
+    def send_txn(self, txn): # txn_size is in KB (default is 1KB)
         def per_msg_sender():
             d_ij = np.random.exponential(scale=(self.d_ij_mean))
 
             # delay in ms
-            delay = self.p_ij + ((m_size*8.0)/self.c_ij) + d_ij
+            delay = self.p_ij + ((txn.txn_size * 8.0)/self.c_ij) + d_ij
 
-            # Generating unique transaction ID here
-            txn_data = f"{self.sender.ID} pays {self.receiver.ID} {coins} coins" + str(random.randint(1, 10000000000))
-            txn_ID = hashlib.sha256(txn_data.encode()).hexdigest()
-            
-            # Creating the message that would be sent
-            msg = Transaction(self.sender.ID, self.receiver.ID, coins, txn_ID)
             print(f"Delay of {self.sender.ID} to {self.receiver.ID} is {delay} ++++++ TIME {self.env.now}")
 
             yield self.env.timeout(delay) # time is in milliseconds
 
             # Sending transaction by adding it to receiver's queue
             print(f"PUT IN Q of {self.receiver.ID} by {self.sender.ID} -$$- TIME {self.env.now}")
-            self.receiver.read_queue.put(msg)
+
+            self.receiver.read_queue.put(txn)
             
         self.env.process(per_msg_sender())
         
