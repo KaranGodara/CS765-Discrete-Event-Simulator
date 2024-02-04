@@ -1,6 +1,8 @@
 import random 
 import numpy as np
 
+from block import Block
+
 class Peer_Link :
     def __init__(self, sender, receiver, env):
         self.sender = sender
@@ -21,13 +23,12 @@ class Peer_Link :
             # delay in ms
             delay = self.p_ij + ((txn.txn_size * 8.0)/self.c_ij) + d_ij
 
-            print(f"Delay of {self.sender.ID} to {self.receiver.ID} is {delay} ++++++ TIME {self.env.now}")
+            if isinstance(txn, Block):
+                print(f"BLOCK: Delay of {self.sender.ID} to {self.receiver.ID} is {delay} ++++++ TIME {self.env.now}")
 
             yield self.env.timeout(delay) # time is in milliseconds
 
             # Sending transaction by adding it to receiver's queue
-            print(f"PUT IN Q of {self.receiver.ID} by {self.sender.ID} -$$- TIME {self.env.now}")
-
             self.receiver.read_queue.put(txn)
             
         self.env.process(per_msg_sender())

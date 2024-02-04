@@ -4,15 +4,18 @@ from collections import defaultdict
 
 from peer import Peer
 from peer_link import Peer_Link
+from block import Block
+from tree import TreeNode
 
 class Simulator:
-    def __init__(self, n, z0, z1, T_tx, env):
+    def __init__(self, n, z0, z1, T_tx, I, env):
         # Initial parameters
         self.n = n
         self.z0 = z0
         self.z1 = z1
         self.T_tx = T_tx
         self.env = env
+        self.I  = I * 1000 # received in secs and converting it to ms
 
         # Initialising Peer Dict
         self.peer_dict = dict()
@@ -28,8 +31,34 @@ class Simulator:
 
     # Creating peers and adding them in the peer dict of simulator
     def create_peers(self):
+        cnt_high = 0
         for id in range(1, self.n + 1):
             self.peer_dict[id] = (Peer(id, self.generate_RV(self.z0 / 100.0), self.generate_RV(self.z1 / 100.0), self.T_tx, self.n, self.env))
+            if self.peer_dict[id].CPU_low == 0:
+                cnt_high += 1
+
+        h = 1.0 / (9.0*cnt_high + self.n)
+        slow_mine_time = self.I / h
+
+        # hashing power fraction set for all peers
+        for id in range(1, self.n + 1):
+            if self.peer_dict[id].slow: # if slow
+                self.peer_dict[id].update_block_mine_time(slow_mine_time)
+            else:
+                self.peer_dict[id].update_block_mine_time(slow_mine_time / 10.0)
+        
+        # Added genesis block and its tree node to all the peers
+        genesis_blk = Block(0, None, 1000)
+
+        # Emptying the txn_list cause by default it adds coin base txn for the miner
+        genesis_blk.txn_list = []
+
+        # Generating corresponding tree node for the genesis block
+        genesis_tree_node = TreeNode(genesis_blk, self.env.now, None, self.n)
+        for id in range(1, self.n + 1):
+            self.peer_dict[id].add_genesis_block(genesis_tree_node)
+
+
 
     # This function checks if given edge list representation forms a connected graph or not
     def check_connectivity(self, edge_list):
@@ -152,5 +181,8 @@ class Simulator:
         for idx in range(1, self.n+1):
             self.env.process((self.peer_dict[idx]).txn_sender())
             self.env.process((self.peer_dict[idx]).reader())
+
+            # It starts the intial block formation at each peer
+            self.env.process((self.peer_dict[idx]).create_and_transmit_new_block())
 
 
