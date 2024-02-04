@@ -66,30 +66,33 @@ class Peer:
 
     # This function would send txns from the current peer
     def txn_sender(self):
-        # while True:
-            # Finding the peer to which I would send the transaction
-            rec = random.randint(1, self.n)
-            while rec==self.ID:
-                rec = random.randint(1, self.n)
-
-            # Sending the txn 
-            print(f"{self.ID} paid {rec} ------- TIME rn {self.env.now}")
-
-            # Creating transaction
-            txn = self.create_txn(rec, 5, 1)
-            
-            # Adding to the list of seen txns
-            # self.seen_txn_ID.add(txn.txn_ID)
-            self.txns_seen[txn.txn_ID] = txn
-
-            # Sending the currently created transaction
-            for link in self.send_list:
-                link.send_txn(txn)
-
-            # Waiting for exponential random time(as required by question) before sending next txn
+        while True:
+            # Would wait for exponential random time(as required by question) before sending next txn
             gap = np.random.exponential(scale=(self.T_tx))
-            print(f"SENDER {self.ID} gap {gap} TIME {self.env.now}")
 
+            # Creating transaction only if balance > 0
+            # Randomly seelcting coins based on UTxOs
+            if self.curr_tree_node.balance[self.ID] > 0:
+                # Finding the peer to which I would send the transaction
+                rec = random.randint(1, self.n)
+                while rec==self.ID:
+                    rec = random.randint(1, self.n)
+
+                # Sending the txn 
+                # Coins selected in such manner so that some invalid txns also may appear and some valid
+                coins = random.randint(1, round(self.curr_tree_node.balance[self.ID] * 0.6))
+                print(f"{self.ID} paid {rec} coins {coins} ------- TIME rn {self.env.now}")
+                txn = self.create_txn(rec, coins, 1)
+                
+                # Adding to the list of seen txns
+                # self.seen_txn_ID.add(txn.txn_ID)
+                self.txns_seen[txn.txn_ID] = txn
+
+                # Sending the currently created transaction
+                for link in self.send_list:
+                    link.send_txn(txn)
+
+            print(f"SENDER {self.ID} gap {gap} TIME {self.env.now}")
             yield self.env.timeout(gap)
             
     def forward_txn(self, txn):

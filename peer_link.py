@@ -2,6 +2,7 @@ import random
 import numpy as np
 
 from block import Block
+from transaction import Transaction
 
 class Peer_Link :
     def __init__(self, sender, receiver, env):
@@ -25,6 +26,8 @@ class Peer_Link :
 
             if isinstance(txn, Block):
                 print(f"BLOCK: Delay of {self.sender.ID} to {self.receiver.ID} is {delay} ++++++ TIME {self.env.now}")
+            if isinstance(txn, Transaction):
+                print(f"TXN: Delay of {self.sender.ID} to {self.receiver.ID} is {delay} ++++++ TIME {self.env.now}")
 
             yield self.env.timeout(delay) # time is in milliseconds
 

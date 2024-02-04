@@ -28,7 +28,7 @@ def main():
     sim.start_simulation()
 
     # Starting simulation
-    env.run(until=1000)
+    env.run(until=10000)
 
 if __name__ == "__main__":
     main()
