@@ -1,5 +1,6 @@
 import random
 import queue
+import copy
 from collections import defaultdict
 
 from peer import Peer
@@ -56,8 +57,7 @@ class Simulator:
         # Generating corresponding tree node for the genesis block
         genesis_tree_node = TreeNode(genesis_blk, self.env.now, None, self.n)
         for id in range(1, self.n + 1):
-            self.peer_dict[id].add_genesis_block(genesis_tree_node)
-
+            self.peer_dict[id].add_genesis_block(copy.deepcopy(genesis_tree_node))
 
 
     # This function checks if given edge list representation forms a connected graph or not
@@ -89,8 +89,6 @@ class Simulator:
                     q.put(nxt-1)
         
         return (sum(visited) == self.n)
-        
-
 
     # Making connected graph for the nodes
     def create_network_graph(self, min_peers, max_peers):
@@ -184,5 +182,3 @@ class Simulator:
 
             # It starts the intial block formation at each peer
             self.env.process((self.peer_dict[idx]).create_and_transmit_new_block())
-
-

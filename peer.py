@@ -7,7 +7,7 @@ from collections import defaultdict
 
 from transaction import Transaction
 from block import Block
-from tree import TreeNode
+from tree import TreeNode, Tree
 
 class Peer:
     def __init__(self, ID, slow, CPU_low, T_tx, n, env):
@@ -19,8 +19,8 @@ class Peer:
         self.env = env
         self.block_mine_time = 0 # This is mean block mining time
 
-        # # This is my blockchain tree
-        # self.blockchain = None
+        # This is my blockchain tree
+        self.blockchain = None
 
         # Initialising empty set containing the transaction IDs I have seen
         # self.seen_txn_ID = set()
@@ -49,7 +49,7 @@ class Peer:
     def add_genesis_block(self, gen_block_tree_node):
         self.block_to_tree[gen_block_tree_node.block.block_ID] = gen_block_tree_node
         self.curr_tree_node = gen_block_tree_node
-        # self.blockchain = Tree(gen_block_tree_node)
+        self.blockchain = Tree(gen_block_tree_node)
     
     def update_send_list(self, lnk):
         self.send_list.append(lnk)
@@ -193,7 +193,7 @@ class Peer:
             # Adding this to my own read_queue cause now we need to add it to our block chain
             self.read_queue.put(new_block)
         else: 
-            print(f"BLOCK: {self.ID} && {new_block.block_ID} at {self.env.now} Rejeceted ")
+            print(f"BLOCK: {self.ID} && {new_block.block_ID} at {self.env.now} Rejected ")
             
 
 
@@ -202,6 +202,9 @@ class Peer:
     def forward_block(self, blk):
         # Need to create tree node and add the mapping to block_to_tree
         self.block_to_tree[blk.block_ID] = TreeNode(blk, self.env.now, self.block_to_tree[blk.parent_ID], self.n)
+
+        # Adding as child, current block in the parent block's node
+        self.block_to_tree[blk.parent_ID].add_child(self.block_to_tree[blk.block_ID])
 
         # Changing the sender of block
         received_from = blk.curr_sender

@@ -1,5 +1,6 @@
 import argparse
 import simpy
+
 from simulator import Simulator
 
 def main():
@@ -27,7 +28,7 @@ def main():
     sim.start_simulation()
 
     # Starting simulation
-    env.run(until=5000)
+    env.run(until=1000)
 
 if __name__ == "__main__":
     main()

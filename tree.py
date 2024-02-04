@@ -1,4 +1,5 @@
 import sys
+import queue
 
 from collections import defaultdict
 from transaction import Transaction
@@ -40,8 +41,24 @@ class TreeNode:
     def add_child(self, child):
         self.children.append(child)
 
+    def __str__(self):
+        if self.parent == None:
+            return f"BLOCK : IS geneis block with ID {self.block.block_ID}"
+        else:
+            return f"BLOCK : This Tree Node block ID {self.block.block_ID} and parent block ID {self.block.parent_ID} and checking {self.parent.block.block_ID == self.block.parent_ID}"
+
 class Tree:
     def __init__(self, root):
         self.root = root
 
     # ADD FUNCTIONS FOR ANIMATION HERE, LIKE TRAVERSAL, PRINTING ETC
+    # This function prints blockchain maintained at current peer (using BFS)
+    def print_tree_in_BFS(self):
+        t = self.root
+        q = queue.Queue()
+        q.put(t)
+        while not q.empty():
+            tmp = q.get()
+            print(tmp)
+            for a in tmp.children:
+                q.put(a)
