@@ -183,7 +183,25 @@ class Simulator:
             # It starts the intial block formation at each peer
             self.env.process((self.peer_dict[idx]).create_and_transmit_new_block())
 
+    # This function would print the blockchain of all the peers
     def print_blockchain(self):
         print(f"Printing blockchain")
         for idx in range(1, self.n+1):
             self.peer_dict[idx].print_blockchain(self.peer_dict)
+
+    # This function would generate info about minors, simulation's parameters and write it to a file
+    def generate_info(self, file):
+        print(f"Writing simulation's parameters")
+        with open(file, "w") as f:
+            f.write(f"Number of peers in the network (n): {self.n}\n")
+            f.write(f"Percentage of slow peers (z0): {self.z0}\n")
+            f.write(f"Percentage of peers with low CPU (z1): {self.z1}\n")
+            f.write(f"Mean interarrival time between transactions (in ms) (T_tx): {self.T_tx}\n")
+            f.write(f"Mean interarrival time between blocks (in ms) (I): {self.I}\n")
+            f.write("==============================================\n")
+            f.flush()
+            print(f"Generating miner info")
+            f.write("ID,Slow|Fast,Low CPU|High CPU\n")
+            for idx in range(1, self.n+1):
+                f.write(f'{idx},{"Slow" if self.peer_dict[idx].slow else "Fast"},{"Low CPU" if self.peer_dict[idx].CPU_low else "High CPU"}\n')
+                f.flush()

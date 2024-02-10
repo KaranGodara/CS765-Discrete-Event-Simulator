@@ -8,6 +8,7 @@ def main():
     parser = argparse.ArgumentParser(description='Simulation of a P2P Cryptocurrency Network')
 
     # Adding arguments
+    parser.add_argument('--info', action="store_true", help='Generate info')
     parser.add_argument('--n', type=int, default=10, help='Number of peers in the network')
     parser.add_argument('--z0', type=int, default=50, help='Percentage of slow peers')
     parser.add_argument('--z1', type=int, default=50, help='Percentage of peers with Low CPU')
@@ -32,6 +33,10 @@ def main():
 
     # Printing the blockchain of all peers
     sim.print_blockchain()
+
+    # Generating miner info and simulation's parameters
+    if args.info:
+        sim.generate_info("output/info.txt")
 
 if __name__ == "__main__":
     main()
