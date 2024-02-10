@@ -6,7 +6,7 @@ from networkx.drawing.nx_pydot import graphviz_layout
 import argparse
 
 # Read the graph from the file
-# Assumed format: BLOCK ID,TIME STAMP,PARENT ID,MINER
+# Assumed format: BLOCK ID,TIME STAMP,PARENT ID,MINER,SLOW,LOW_CPU
 def read_graph(file="output/temp.txt"):
     id_to_virt = {}
     virt_to_miner = {}
@@ -16,7 +16,9 @@ def read_graph(file="output/temp.txt"):
     with open(file , "r") as f:
         reader = csv.reader(f)
         next(reader)
-        for row in reader:
+        rows = list(reader)
+        rows.sort(key=lambda x: float(x[1]))
+        for row in rows:
             id_to_virt[row[0]] = i
             virt_to_miner[i] = int(row[3])
             miner[int(row[3])] = (int(row[4]), int(row[5]))
