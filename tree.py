@@ -78,5 +78,5 @@ class Tree:
                 curr = q.get()
                 for child in curr.children:
                     q.put(child)
-                    f.write(f"{child.block.block_ID},{child.time_stamp},{child.parent.block.block_ID if child.parent!=None else 'NULL'},{child.block.txn_list[0].miner if len(child.block.txn_list)>0 else 0},{peer_dict[child.block.txn_list[0].miner].slow if len(node.block.txn_list)>0 else 0},{peer_dict[child.block.txn_list[0].miner].CPU_low if len(node.block.txn_list)>0 else 0}\n")
+                    f.write(f"{child.block.block_ID},{child.time_stamp},{child.parent.block.block_ID if child.parent!=None else 'NULL'},{child.block.txn_list[0].miner if len(child.block.txn_list)>0 else 0},{peer_dict[child.block.txn_list[0].miner].slow if len(child.block.txn_list)>0 else 0},{peer_dict[child.block.txn_list[0].miner].CPU_low if len(child.block.txn_list)>0 else 0}\n")
                     f.flush()
