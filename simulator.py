@@ -43,7 +43,7 @@ class Simulator:
 
         # hashing power fraction set for all peers
         for id in range(1, self.n + 1):
-            if self.peer_dict[id].slow: # if slow
+            if self.peer_dict[id].CPU_low: # if CPU is low
                 self.peer_dict[id].update_block_mine_time(slow_mine_time)
             else:
                 self.peer_dict[id].update_block_mine_time(slow_mine_time / 10.0)
@@ -103,7 +103,7 @@ class Simulator:
             # Emptying edge_list of previous failed attempts
             edge_list.clear()
 
-            # This stores initially how many neighbor nodes to connect for each node
+            # This stores initially how many neighbour nodes to connect for each node
             p_cnt = dict()
 
             # Populating the p_cnt, with values between min_peers and max_peers (both inclusive)
@@ -182,3 +182,8 @@ class Simulator:
 
             # It starts the intial block formation at each peer
             self.env.process((self.peer_dict[idx]).create_and_transmit_new_block())
+
+    def print_blockchain(self):
+        print(f"Printing blockchain")
+        for idx in range(1, self.n+1):
+            self.peer_dict[idx].print_blockchain(self.peer_dict)

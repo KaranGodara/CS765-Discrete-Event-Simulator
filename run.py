@@ -30,5 +30,8 @@ def main():
     # Starting simulation
     env.run(until=10000)
 
+    # Printing the blockchain of all peers
+    sim.print_blockchain()
+
 if __name__ == "__main__":
     main()

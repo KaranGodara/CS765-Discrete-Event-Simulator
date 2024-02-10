@@ -19,7 +19,7 @@ class TreeNode:
         # Would store the balance until this block for all peers
         self.balance = defaultdict(int)
 
-        if self.parent != None : # Means genesis Tree Node
+        if self.parent != None : # Means non-genesis Tree Node
             self.depth = self.parent.depth + 1
             for idx in range(1, n + 1):
                 self.balance[idx] = self.parent.balance[idx]
@@ -51,14 +51,32 @@ class Tree:
     def __init__(self, root):
         self.root = root
 
-    # ADD FUNCTIONS FOR ANIMATION HERE, LIKE TRAVERSAL, PRINTING ETC
-    # This function prints blockchain maintained at current peer (using BFS)
-    def print_tree_in_BFS(self):
-        t = self.root
-        q = queue.Queue()
-        q.put(t)
-        while not q.empty():
-            tmp = q.get()
-            print(tmp)
-            for a in tmp.children:
-                q.put(a)
+    # This function prints blockchain maintained at current peer (using pre-order traversal)
+    def print_pre(self, node, peer_dict, file="output/temp.txt", clr=True):
+        if clr:
+            with open(file, "w") as f:
+                f.write("BLOCK ID,TIME STAMP,PARENT ID,MINER,SLOW,LOW_CPU\n")
+                f.flush()
+        with open(file, "a") as f:
+            f.write(f"{node.block.block_ID},{node.time_stamp},{node.parent.block.block_ID if node.parent!=None else 'NULL'},{node.block.txn_list[0].miner if len(node.block.txn_list)>0 else 0},{peer_dict[node.block.txn_list[0].miner].slow if len(node.block.txn_list)>0 else 0},{peer_dict[node.block.txn_list[0].miner].CPU_low if len(node.block.txn_list)>0 else 0}\n")
+            f.flush()
+            for child in node.children:
+                self.print_pre(child, peer_dict, file, False)
+    
+    # This function prints blockchain maintained at current peer (using binary search traversal)
+    def print_bfs(self, node, peer_dict, file="output/temp.txt", clr=True):
+        if clr:
+            with open(file, "w") as f:
+                f.write("BLOCK ID,TIME STAMP,PARENT ID,MINER,SLOW,LOW_CPU\n")
+                f.flush()
+        with open(file, "a") as f:
+            f.write(f"{node.block.block_ID},{node.time_stamp},{node.parent.block.block_ID if node.parent!=None else 'NULL'},{node.block.txn_list[0].miner if len(node.block.txn_list)>0 else 0},{peer_dict[node.block.txn_list[0].miner].slow if len(node.block.txn_list)>0 else 0},{peer_dict[node.block.txn_list[0].miner].CPU_low if len(node.block.txn_list)>0 else 0}\n")
+            f.flush()
+            q = queue.Queue()
+            q.put(node)
+            while not q.empty():
+                curr = q.get()
+                for child in curr.children:
+                    q.put(child)
+                    f.write(f"{child.block.block_ID},{child.time_stamp},{child.parent.block.block_ID if child.parent!=None else 'NULL'},{child.block.txn_list[0].miner if len(child.block.txn_list)>0 else 0},{peer_dict[child.block.txn_list[0].miner].slow if len(node.block.txn_list)>0 else 0},{peer_dict[child.block.txn_list[0].miner].CPU_low if len(node.block.txn_list)>0 else 0}\n")
+                    f.flush()

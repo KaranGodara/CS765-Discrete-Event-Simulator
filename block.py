@@ -1,5 +1,6 @@
 import random
 import hashlib
+import datetime
 
 class CoinBaseTransaction:
     def __init__(self, miner, txn_size = 1, coins = 50):
@@ -9,7 +10,7 @@ class CoinBaseTransaction:
 
         # Would make txn_ID
         # Generating unique transaction ID here
-        txn_data = f"{self.miner} mines {self.coins} coins" + str(random.randint(1, 10000000000)) + "___" + str(random.randint(1, 10000000000))
+        txn_data = f"{self.miner} mines {self.coins} coins" + str(random.randint(1, 10000000000)) + "___" + str(random.randint(1, 10000000000))+ str(datetime.datetime.now().microsecond)
         self.txn_ID = hashlib.sha256(txn_data.encode()).hexdigest()
 
     def __str__(self):
@@ -26,7 +27,7 @@ class Block:
         self.txn_list = [CoinBaseTransaction(miner, 1, 50)]
 
         # Assigning block ID
-        blk_data = f"{miner}" + str(random.randint(1, 10000000000)) + "$$$" + str(random.randint(1, 10000000000))
+        blk_data = f"{miner}" + str(random.randint(1, 10000000000)) + "$$$" + str(random.randint(1, 10000000000)) + str(datetime.datetime.now().microsecond)
         self.block_ID = hashlib.sha256(blk_data.encode()).hexdigest()
 
         # Storing the sender through which peer receieved this block, by default

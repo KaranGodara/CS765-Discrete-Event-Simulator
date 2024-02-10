@@ -4,7 +4,7 @@ import simpy
 import hashlib
 import copy
 from collections import defaultdict
-
+import datetime
 from transaction import Transaction
 from block import Block
 from tree import TreeNode, Tree
@@ -57,7 +57,7 @@ class Peer:
     # This function creates transaction
     def create_txn(self, receiver, coins = 5, txn_size = 1):
         # Generating unique transaction ID here
-        txn_data = f"{self.ID} pays {receiver} {coins} coins" + str(random.randint(1, 10000000000)) + "___" + str(random.randint(1, 10000000000))
+        txn_data = f"{self.ID} pays {receiver} {coins} coins" + str(random.randint(1, 10000000000)) + "___" + str(random.randint(1, 10000000000)) + str(datetime.datetime.now().microsecond)
         txn_ID = hashlib.sha256(txn_data.encode()).hexdigest()
         
         # Creating the message that would be sent
@@ -71,7 +71,7 @@ class Peer:
             gap = np.random.exponential(scale=(self.T_tx))
 
             # Creating transaction only if balance > 0
-            # Randomly seelcting coins based on UTxOs
+            # Randomly selecting coins based on UTxOs
             if self.curr_tree_node.balance[self.ID] > 0:
                 # Finding the peer to which I would send the transaction
                 rec = random.randint(1, self.n)
@@ -172,7 +172,7 @@ class Peer:
             # Can only add this txn if sender's balance is more than what he wants to spend
             if spending[txn.sender_ID] >= txn.coins :
                 # O is returned if max limit reached and block not added
-                if new_block.add_txn_to_block(txn) == 0: #Added txn to Block
+                if new_block.add_txn_to_block(txn) == 0: #Not added txn to Block
                     break
 
                 # If 1 received that means, txn added successfully to block, update balance
@@ -262,3 +262,7 @@ class Peer:
                 # Processing block here
                 print(msg, f"BLOCK AT {self.env.now} rcvd at {self.ID}")
                 self.block_receiver(msg)
+
+    # This function would print the blockchain of the current peer
+    def print_blockchain(self, peer_dict):
+        self.blockchain.print_bfs(self.blockchain.root,  peer_dict, f"output/blockchain_{self.ID}.txt")

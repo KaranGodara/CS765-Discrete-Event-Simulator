@@ -15,7 +15,7 @@ class Peer_Link :
         self.c_ij = 100 # It's in Mbps
         if (sender.slow or receiver.slow) :
             self.c_ij = 5
-        self.d_ij_mean = (96.0/self.c_ij)
+        self.d_ij_mean = (96.0/self.c_ij)   # It's in ms
 
     def send_txn(self, txn): # txn_size is in KB (default is 1KB)
         def per_msg_sender():
