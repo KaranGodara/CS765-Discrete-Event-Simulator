@@ -9,7 +9,7 @@ from block import Block
 from tree import TreeNode
 
 class Simulator:
-    def __init__(self, n, z0, z1, T_tx, I, env):
+    def __init__(self, n, z0, z1, T_tx, I, T_sim, env):
         # Initial parameters
         self.n = n
         self.z0 = z0
@@ -17,6 +17,7 @@ class Simulator:
         self.T_tx = T_tx
         self.env = env
         self.I  = I * 1000 # received in secs and converting it to ms
+        self.T_sim = T_sim
 
         # Initialising Peer Dict
         self.peer_dict = dict()
@@ -193,6 +194,7 @@ class Simulator:
     def generate_info(self, file):
         print(f"Writing simulation's parameters")
         with open(file, "w") as f:
+            f.write(f"Simulation time (in ms): {self.T_sim}\n")
             f.write(f"Number of peers in the network (n): {self.n}\n")
             f.write(f"Percentage of slow peers (z0): {self.z0}\n")
             f.write(f"Percentage of peers with low CPU (z1): {self.z1}\n")
