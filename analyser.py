@@ -2,7 +2,6 @@ import networkx as nx
 import os
 import csv
 import matplotlib.pyplot as plt
-import pydot
 from networkx.drawing.nx_pydot import graphviz_layout
 import argparse
 from collections import Counter
@@ -117,9 +116,13 @@ if __name__ == "__main__":
     argparser = argparse.ArgumentParser(description='Analyser for the blockchain')
     argparser.add_argument('--blkchain', type=str, default="output/blockchain_1.txt", help='File containing the blockchain')
     argparser.add_argument('--info_file', type=str, default="output/info.txt", help='File containing info about miners')
-    argparser.add_argument('--only_plot', action="store_true", help="Plot blockchain tree")
+    argparser.add_argument('--only_plot', action="store_true", help="Only plot blockchain tree and exit")
     argparser.add_argument('--output', type=str, default="output/final_stats.txt", help="Output file")
     args = argparser.parse_args()
+
+    # Make output directory if it doesn't exist
+    if not os.path.exists("output"):
+        os.makedirs("output")
 
     # Plot the blockchain tree
     plot_graph(args.blkchain)

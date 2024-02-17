@@ -1,5 +1,6 @@
 import argparse
 import simpy
+import os
 
 from simulator import Simulator
 
@@ -31,6 +32,12 @@ def main():
 
     # Starting simulation
     env.run(until=args.T_sim * 1000)
+
+    print("Simulation finished")
+
+    # Make output directory if it doesn't exist
+    if not os.path.exists("output"):
+        os.makedirs("output")
 
     # Printing the blockchain of all peers
     sim.print_blockchain()
