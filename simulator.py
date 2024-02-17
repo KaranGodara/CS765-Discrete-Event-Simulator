@@ -156,7 +156,7 @@ class Simulator:
             # Checking if graph is connected
             grph_made = self.check_connectivity(edge_list)
         print("Graph made successfully")
-        print(edge_list)
+        # print(edge_list)
         return edge_list
 
     # This function would actually materialise the connections of the p2p network
@@ -192,7 +192,7 @@ class Simulator:
 
     # This function would generate info about minors, simulation's parameters and write it to a file
     def generate_info(self, file):
-        print(f"Writing simulation's parameters")
+        # print(f"Writing simulation's parameters")
         with open(file, "w") as f:
             f.write(f"Simulation time (in ms): {self.T_sim}\n")
             f.write(f"Number of peers in the network (n): {self.n}\n")

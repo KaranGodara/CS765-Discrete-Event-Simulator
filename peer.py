@@ -81,7 +81,7 @@ class Peer:
                 # Sending the txn 
                 # Coins selected in such manner so that some invalid txns also may appear and some valid
                 coins = random.randint(1, round(self.curr_tree_node.balance[self.ID] * 0.6))
-                print(f"{self.ID} paid {rec} coins {coins} ------- TIME rn {self.env.now}")
+                # print(f"{self.ID} paid {rec} coins {coins} ------- TIME rn {self.env.now}")
                 txn = self.create_txn(rec, coins, 1)
                 
                 # Adding to the list of seen txns
@@ -92,7 +92,7 @@ class Peer:
                 for link in self.send_list:
                     link.send_txn(txn)
 
-            print(f"SENDER {self.ID} gap {gap} TIME {self.env.now}")
+            # print(f"SENDER {self.ID} gap {gap} TIME {self.env.now}")
             yield self.env.timeout(gap)
             
     def forward_txn(self, txn):
@@ -117,7 +117,7 @@ class Peer:
                 # Making sure that we do loop-less transaction
                 if link.receiver.ID == received_from:
                     continue
-                print(f"{self.ID} FWD TO {link.receiver.ID} rec from {received_from} AT {self.env.now}")
+                # print(f"{self.ID} FWD TO {link.receiver.ID} rec from {received_from} AT {self.env.now}")
                 link.send_txn(new_txn)
     
     ##################################################################################
@@ -181,7 +181,7 @@ class Peer:
         # now valid transactions have been added to the block
         # Simulating PoW
         to_time = np.random.exponential(scale=(self.block_mine_time))
-        print(f"BLOCK: {self.ID} creation start at {new_block.block_ID} at {self.env.now} TO for {to_time}")
+        # print(f"BLOCK: {self.ID} creation start at {new_block.block_ID} at {self.env.now} TO for {to_time}")
         yield self.env.timeout(to_time)
 
         # now PoW has been simulated
@@ -189,14 +189,14 @@ class Peer:
         # that is curr_tree_node is the same or not
         # now checking block's parent ID is same as cur_tree_node.block_ID
         if(new_block.parent_ID == self.curr_tree_node.block.block_ID):
-            print(f"BLOCK: {self.ID} longest so broadcasting {new_block.block_ID} at {self.env.now}")
+            # print(f"BLOCK: {self.ID} longest so broadcasting {new_block.block_ID} at {self.env.now}")
 
             # add this block in my tree
             # self.block_receiver(new_block)
             # Adding this to my own read_queue cause now we need to add it to our block chain
             self.read_queue.put(new_block)
-        else: 
-            print(f"BLOCK: {self.ID} && {new_block.block_ID} at {self.env.now} Rejected ")
+        # else: 
+        #     print(f"BLOCK: {self.ID} && {new_block.block_ID} at {self.env.now} Rejected ")
             
 
 
@@ -223,7 +223,7 @@ class Peer:
             # Making sure that we do loop-less transaction
             if link.receiver.ID == received_from:
                 continue
-            print(f"BLOCK: {self.ID} FWD TO {link.receiver.ID} rec from {received_from} AT {self.env.now}")
+            # print(f"BLOCK: {self.ID} FWD TO {link.receiver.ID} rec from {received_from} AT {self.env.now}")
             link.send_txn(new_blk)
 
 
@@ -235,7 +235,7 @@ class Peer:
 
         # Does it create a new longest chain
         if self.block_to_tree[blk.block_ID].depth > self.curr_tree_node.depth :
-            print(f"BLOCK: Curr tree node changed {self.ID}")
+            # print(f"BLOCK: Curr tree node changed {self.ID}")
             # If yes, select subset of txns received so far not included in any blocks in the longest chain
             # Generate Tk = I/hk
             self.curr_tree_node = self.block_to_tree[blk.block_ID]
@@ -255,12 +255,12 @@ class Peer:
 
             if isinstance(msg, Transaction):
                 # Processing the txn here
-                print(msg, f"AT {self.env.now} received at {self.ID}")
+                # print(msg, f"AT {self.env.now} received at {self.ID}")
                 self.forward_txn(msg)
             
             else :
                 # Processing block here
-                print(msg, f"BLOCK AT {self.env.now} rcvd at {self.ID}")
+                # print(msg, f"BLOCK AT {self.env.now} rcvd at {self.ID}")
                 self.block_receiver(msg)
 
     # This function would print the blockchain of the current peer

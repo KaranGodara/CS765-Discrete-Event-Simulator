@@ -24,10 +24,10 @@ class Peer_Link :
             # delay in ms
             delay = self.p_ij + ((txn.txn_size * 8.0)/self.c_ij) + d_ij
 
-            if isinstance(txn, Block):
-                print(f"BLOCK: Delay of {self.sender.ID} to {self.receiver.ID} is {delay} ++++++ TIME {self.env.now}")
-            if isinstance(txn, Transaction):
-                print(f"TXN: Delay of {self.sender.ID} to {self.receiver.ID} is {delay} ++++++ TIME {self.env.now}")
+            # if isinstance(txn, Block):
+            #     print(f"BLOCK: Delay of {self.sender.ID} to {self.receiver.ID} is {delay} ++++++ TIME {self.env.now}")
+            # if isinstance(txn, Transaction):
+            #     print(f"TXN: Delay of {self.sender.ID} to {self.receiver.ID} is {delay} ++++++ TIME {self.env.now}")
 
             yield self.env.timeout(delay) # time is in milliseconds
 
