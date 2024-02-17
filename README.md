@@ -70,3 +70,18 @@ options:
 - The output of the simulator will be stored in the output directory. The following files will be generated:
     - blockchain.png: The blockchain tree corresponding to the blockchain file
     - final_stats.txt: The final stats of the blockchain if --only_plot flag is not used
+
+## Directory Structure
+- This directory contains the following files:
+    - [run.py](run.py): The main file to run the simulator
+    - [analyser.py](analyser.py): The analyser for the blockchain
+    - [README.md](README.md): This README file
+    - [Report.pdf](Report.pdf): The report of this assignment
+    - [Design_Document.pdf](Design_Document.pdf): The design document of this assignment
+    - [simulator.py](simulator.py): The simulator class
+    - [peer.py](peer.py): The peer class denoting each peer (miner) in the network
+    - [peer_link.py](peer_link.py): The peer link class denoting the link between two peers
+    - [block.py](block.py): The blocks class denoting the blocks in the blockchain
+    - [transaction.py](transaction.py): The transaction class denoting the transactions in the blockchain
+    - [tree.py](tree.py): The tree class denoting the blockchain tree
+    - [results](results): This directory contains the results of the simulation and analysis that we have used in the report
