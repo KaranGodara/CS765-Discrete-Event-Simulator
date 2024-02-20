@@ -85,3 +85,10 @@ options:
     - [transaction.py](transaction.py): The transaction class denoting the transactions in the blockchain
     - [tree.py](tree.py): The tree class denoting the blockchain tree
     - [results](results): This directory contains the results of the simulation and analysis that we have used in the report
+ 
+## Libraries used and their versions
+- networkx (3.2)
+- matplotlib (3.8.0)
+- pydot (2.0.0)
+- numpy (1.26.1)
+- simpy (4.1.1)
