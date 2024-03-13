@@ -21,7 +21,7 @@ class Peer_Link :
         def per_msg_sender():
             d_ij = np.random.exponential(scale=(self.d_ij_mean))
 
-            # delay in ms
+            # delay in ms, factor of 8 is to convert bytes to bits
             delay = self.p_ij + ((txn.txn_size * 8.0)/self.c_ij) + d_ij
 
             # if isinstance(txn, Block):

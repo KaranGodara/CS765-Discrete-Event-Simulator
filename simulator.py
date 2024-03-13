@@ -9,11 +9,17 @@ from block import Block
 from tree import TreeNode
 
 class Simulator:
-    def __init__(self, n, z0, z1, T_tx, I, T_sim, env):
+    ''' Guramrit started this '''
+    def __init__(self, n, z0, z1, zeta1, zeta2, T_tx, I, T_sim, env):
+        ''' Guramrit ended this '''
         # Initial parameters
         self.n = n
         self.z0 = z0
         self.z1 = z1
+        ''' Guramrit started this '''
+        self.zeta1 = zeta1
+        self.zeta2 = zeta2
+        ''' Guramrit ended this '''
         self.T_tx = T_tx
         self.env = env
         self.I  = I * 1000 # received in secs and converting it to ms
@@ -32,12 +38,21 @@ class Simulator:
             return 0
 
     # Creating peers and adding them in the peer dict of simulator
+    # Node 1 and 2 are adversaries with zeta1 and zeta2 percentage of mining power respectively
+    # TODO: Find High and Low CPU peers percentage from SIR
     def create_peers(self):
         cnt_high = 0
         for id in range(1, self.n + 1):
-            self.peer_dict[id] = (Peer(id, self.generate_RV(self.z0 / 100.0), self.generate_RV(self.z1 / 100.0), self.T_tx, self.n, self.env))
-            if self.peer_dict[id].CPU_low == 0:
-                cnt_high += 1
+            ''' Guramrit started this '''
+            if id == 1:
+                self.peer_dict[id] = (Peer(id, 1, 1, 0, self.zeta1, self.T_tx, self.n, self.env))
+            elif id == 2:
+                self.peer_dict[id] = (Peer(id, 1, 1, 0, self.zeta2, self.T_tx, self.n, self.env))
+            else:
+                self.peer_dict[id] = (Peer(id, self.generate_RV(self.z0 / 100.0), self.generate_RV(self.z1 / 100.0), 1, 0, self.T_tx, self.n, self.env))
+                if self.peer_dict[id].CPU_low == 0:
+                    cnt_high += 1
+            ''' Guramrit ended this '''
 
         h = 1.0 / (9.0*cnt_high + self.n)
         slow_mine_time = self.I / h
