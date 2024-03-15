@@ -3,7 +3,9 @@ import queue
 import copy
 from collections import defaultdict
 
-from peer import Peer
+from attacker import Attacker
+from honest import Honest
+
 from peer_link import Peer_Link
 from block import Block
 from tree import TreeNode
@@ -41,24 +43,35 @@ class Simulator:
     # Node 1 and 2 are adversaries with zeta1 and zeta2 percentage of mining power respectively
     # TODO: Find High and Low CPU peers percentage from SIR
     def create_peers(self):
+        # This variables counts the number of high CPU miners among honest miners
         cnt_high = 0
+
         for id in range(1, self.n + 1):
-            ''' Guramrit started this '''
+            # As of now setting CPU to be high for adversaries, and it is given that adversaries are fast
             if id == 1:
-                self.peer_dict[id] = (Peer(id, 1, 1, 0, self.zeta1, self.T_tx, self.n, self.env))
+                self.peer_dict[id] = (Attacker(id, self.zeta1, self.T_tx, self.n, self.env))
             elif id == 2:
-                self.peer_dict[id] = (Peer(id, 1, 1, 0, self.zeta2, self.T_tx, self.n, self.env))
+                self.peer_dict[id] = (Attacker(id, self.zeta2, self.T_tx, self.n, self.env))
             else:
-                self.peer_dict[id] = (Peer(id, self.generate_RV(self.z0 / 100.0), self.generate_RV(self.z1 / 100.0), 1, 0, self.T_tx, self.n, self.env))
+                self.peer_dict[id] = (Honest(id, self.generate_RV(self.z0 / 100.0), self.generate_RV(self.z1 / 100.0), self.T_tx, self.n, self.env))
                 if self.peer_dict[id].CPU_low == 0:
                     cnt_high += 1
-            ''' Guramrit ended this '''
 
-        h = 1.0 / (9.0*cnt_high + self.n)
+        # Note, since attacker 1 and 2 combined use up zeta1/100 + zeta2/100 fraction of hashing power,
+        # Remaining nodes needs to distribute the remaining hashing fraction among them based on number of
+        # high and low cpu power in honest miners
+        h = (1.0 - ((self.zeta1 / 100.0) + (self.zeta2/100.0))) / (9.0*cnt_high + self.n)
         slow_mine_time = self.I / h
 
         # hashing power fraction set for all peers
-        for id in range(1, self.n + 1):
+        # Mean block inter-arrival time being set for adversaries
+        if self.zeta1 != 0:
+            self.peer_dict[1].update_block_mine_time(self.I / (self.zeta1 / 100.0))
+        if self.zeta2 != 0:
+            self.peer_dict[2].update_block_mine_time(self.I / (self.zeta2 / 100.0))
+
+        # id's range is starting from 3 cause 1 and 2 are adversaries
+        for id in range(3, self.n + 1):
             if self.peer_dict[id].CPU_low: # if CPU is low
                 self.peer_dict[id].update_block_mine_time(slow_mine_time)
             else:
@@ -191,11 +204,14 @@ class Simulator:
 
         # Create actual peer links based on topology
         self.create_p2p_links(edge_list)
-
+        
         for idx in range(1, self.n+1):
             self.env.process((self.peer_dict[idx]).txn_sender())
             self.env.process((self.peer_dict[idx]).reader())
 
+        self.env.process((self.peer_dict[1]).create_pvt_block())
+        self.env.process((self.peer_dict[2]).create_pvt_block())
+        for idx in range(3, self.n+1):
             # It starts the intial block formation at each peer
             self.env.process((self.peer_dict[idx]).create_and_transmit_new_block())
 

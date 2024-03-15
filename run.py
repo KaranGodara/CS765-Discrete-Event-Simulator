@@ -16,16 +16,13 @@ def main():
     parser.add_argument('--T_tx', type=int, default=1000, help='Mean interarrival time between transactions (in ms)')
     parser.add_argument('--I', type=float, default=25, help='Mean interarrival time between blocks (in s)')
     parser.add_argument('--T_sim', type=int, default=200, help='Simulation time (in s)')
-    ''' Guramrit started this '''
     parser.add_argument('--zeta1', type=int, default=40, help='Percentage of mining power of adversary-1')
     parser.add_argument('--zeta2', type=int, default=40, help='Percentage of mining power of adversary-2')
-    ''' Guramrit ended this '''
     # note I is in secs
 
     # Parse the command-line arguments
     args = parser.parse_args()
 
-    ''' Guramrit started this '''
     # Sanity checks
     if args.n < 2:
         print("Number of peers in the network should be at least 2")
@@ -54,15 +51,12 @@ def main():
     if args.zeta1 + args.zeta2 > 100:
         print("Sum of the percentage of mining power of adversary-1 and adversary-2 should be at most 100")
         exit(1)
-    ''' Guramrit ended this '''
 
     # env = simpy.Environment(factor=0.001)
     env = simpy.Environment()
 
     # Simulating the network
-    ''' Guramrit started this '''
     sim = Simulator(args.n, args.z0, args.z1, args.zeta1, args.zeta2, args.T_tx, args.I, args.T_sim, env)
-    ''' Guramrit ended this '''
     
     # Setting simulation entities
     sim.start_simulation()
@@ -77,7 +71,8 @@ def main():
         os.makedirs("output")
 
     # Printing the blockchain of all peers
-    sim.print_blockchain()
+    # NEEDS UPDATION SINCE ATTRIBUTES OF MINERS CHANGED
+    # sim.print_blockchain()
 
     # Generating miner info and simulation's parameters
     if args.info:

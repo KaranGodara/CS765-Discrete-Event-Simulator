@@ -9,23 +9,15 @@ from block import Block
 from tree import TreeNode, Tree
 
 class Peer:
-    ''' Guramrit started this '''
-    def __init__(self, ID, slow, CPU_low, honest, zeta, T_tx, n, env):
-        ''' Guramrit ended this '''
+    def __init__(self, ID, slow, T_tx, n, env):
         self.ID = ID
-        self.slow = slow
-        self.CPU_low = CPU_low
-        ''' Guramrit started this '''
-        self.honest = honest
-        self.zeta = zeta
-        self.lvc_tree_node = None
-        self.pvt_chain = []
-        self.lead = 0
-        ''' Guramrit ended this '''
         self.T_tx = T_tx # This is interarrival time between generated transactions
         self.n = n
         self.env = env
         self.block_mine_time = 0 # This is mean block mining time
+
+        # Setting if miner is slow or fast
+        self.slow = slow
 
         # This is my blockchain tree
         self.blockchain = None
@@ -47,7 +39,12 @@ class Peer:
         # Initialising empty list of all the txns
         self.txns_seen = dict()
 
+        # Leaf(Node) of the longest chain in blockchain
+        # This works as LVC for the attacker.
         self.curr_tree_node = None
+
+        # Creating buffer for those blocks, which might reach before their parent
+        self.buffer_blocks = dict()
 
     # Would be called during peer instantiation to set mean block mining time
     def update_block_mine_time(self, block_mine_time):
@@ -58,10 +55,6 @@ class Peer:
         self.block_to_tree[gen_block_tree_node.block.block_ID] = gen_block_tree_node
         self.curr_tree_node = gen_block_tree_node
         self.blockchain = Tree(gen_block_tree_node)
-        ''' Guramrit started this '''
-        if self.honest == 0:
-            self.lvc_tree_node = gen_block_tree_node
-        ''' Guramrit ended this '''
     
     def update_send_list(self, lnk):
         self.send_list.append(lnk)
@@ -153,8 +146,12 @@ class Peer:
         if blk.block_ID in self.block_to_tree.keys():
             return 0
         
-        # have correct parent block ID
+        # have correct parent block ID, if not add to buffer 
         if blk.parent_ID not in self.block_to_tree.keys():
+            if blk.parent_ID in self.buffer_blocks.keys():
+                self.buffer_blocks[blk.parent_ID].append(blk)
+            else:
+                self.buffer_blocks[blk.parent_ID] = [blk]
             return 0
 
         spending = copy.deepcopy(self.block_to_tree[blk.parent_ID].balance)
@@ -166,7 +163,7 @@ class Peer:
                     return 0
                 spending[txn.sender_ID] -= txn.coins
                 if spending[txn.sender_ID] < 0:
-                    return 0    
+                    return 0 
         return 1
             
     
@@ -193,7 +190,7 @@ class Peer:
         # now valid transactions have been added to the block
         # Simulating PoW
         to_time = np.random.exponential(scale=(self.block_mine_time))
-        # print(f"BLOCK: {self.ID} creation start at {new_block.block_ID} at {self.env.now} TO for {to_time}")
+        print(f"BLOCK: {self.ID} creation start at {new_block.block_ID} at {self.env.now} TO for {to_time}")
         yield self.env.timeout(to_time)
 
         # now PoW has been simulated
@@ -201,63 +198,34 @@ class Peer:
         # that is curr_tree_node is the same or not
         # now checking block's parent ID is same as cur_tree_node.block_ID
         if(new_block.parent_ID == self.curr_tree_node.block.block_ID):
-            # print(f"BLOCK: {self.ID} longest so broadcasting {new_block.block_ID} at {self.env.now}")
+            print(f"BLOCK: {self.ID} longest so broadcasting {new_block.block_ID} at {self.env.now}")
 
             # add this block in my tree
             # self.block_receiver(new_block)
             # Adding this to my own read_queue cause now we need to add it to our block chain
             self.read_queue.put(new_block)
-        # else: 
-        #     print(f"BLOCK: {self.ID} && {new_block.block_ID} at {self.env.now} Rejected ")
-            
+        else: 
+            print(f"BLOCK: {self.ID} && {new_block.block_ID} at {self.env.now} Rejected ")
 
     # Used to forward the validated block, note blocks are already validated
     # Validated here implies, block is seen for the first time and hence forwarding needs to be done
     def forward_block(self, blk):
-        # Need to create tree node and add the mapping to block_to_tree
-        self.block_to_tree[blk.block_ID] = TreeNode(blk, self.env.now, self.block_to_tree[blk.parent_ID], self.n)
+        # Changing the sender of block
+        received_from = blk.curr_sender
+        
+        # Since we need to forward the block by changing the sender field
+        # We need deepcopy as else conflict arises causes same initial block was sent
+        # to all the connected nodes and hence change at 1 reflects in all
+        new_blk = copy.deepcopy(blk)
+        new_blk.curr_sender = self.ID
 
-        # Adding as child, current block in the parent block's node
-        self.block_to_tree[blk.parent_ID].add_child(self.block_to_tree[blk.block_ID])
-
-        ''' Guramrit started this '''
-        # Sending the block to all the connected peers only if not an adversary or if an adversary, then block is of the adversary
-        if self.honest == 1 or blk.miner == self.ID:
-            '''Guramrit ended this '''
-            # Changing the sender of block
-            received_from = blk.curr_sender
-            
-            # Since we need to forward the block by changing the sender field
-            # We need deepcopy as else conflict arises causes same initial block was sent
-            # to all the connected nodes and hence change at 1 reflects in all
-            new_blk = copy.deepcopy(blk)
-            new_blk.curr_sender = self.ID
-
-            # Forwarding the received block
-            for link in self.send_list:
-                # Making sure that we do loop-less transaction
-                if link.receiver.ID == received_from:
-                    continue
-                # print(f"BLOCK: {self.ID} FWD TO {link.receiver.ID} rec from {received_from} AT {self.env.now}")
-                link.send_txn(new_blk)
-
-
-    def block_receiver(self, blk):
-        if not self.validate_block(blk):
-            return
-        # Since block is validated, forward it to others
-        self.forward_block(blk) 
-
-        # Does it create a new longest chain
-        if self.block_to_tree[blk.block_ID].depth > self.curr_tree_node.depth :
-            # print(f"BLOCK: Curr tree node changed {self.ID}")
-            # If yes, select subset of txns received so far not included in any blocks in the longest chain
-            # Generate Tk = I/hk
-            self.curr_tree_node = self.block_to_tree[blk.block_ID]
-
-            # Launching this as process so that reader doesn't time out during 
-            # block PoW mining
-            self.env.process(self.create_and_transmit_new_block())
+        # Forwarding the received block
+        for link in self.send_list:
+            # Making sure that we do loop-less transaction
+            if link.receiver.ID == received_from:
+                continue
+            # print(f"BLOCK: {self.ID} FWD TO {link.receiver.ID} rec from {received_from} AT {self.env.now}")
+            link.send_txn(new_blk)
 
     ##################################################################################
     # FUNCTIONS RELATED TO BLOCKS END HERE
@@ -275,7 +243,7 @@ class Peer:
             
             else :
                 # Processing block here
-                # print(msg, f"BLOCK AT {self.env.now} rcvd at {self.ID}")
+                print(msg, f"BLOCK AT {self.env.now} rcvd at {self.ID}")
                 self.block_receiver(msg)
 
     # This function would print the blockchain of the current peer
