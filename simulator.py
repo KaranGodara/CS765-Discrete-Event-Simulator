@@ -11,17 +11,13 @@ from block import Block
 from tree import TreeNode
 
 class Simulator:
-    ''' Guramrit started this '''
     def __init__(self, n, z0, z1, zeta1, zeta2, T_tx, I, T_sim, env):
-        ''' Guramrit ended this '''
         # Initial parameters
         self.n = n
         self.z0 = z0
         self.z1 = z1
-        ''' Guramrit started this '''
         self.zeta1 = zeta1
         self.zeta2 = zeta2
-        ''' Guramrit ended this '''
         self.T_tx = T_tx
         self.env = env
         self.I  = I * 1000 # received in secs and converting it to ms
@@ -60,7 +56,7 @@ class Simulator:
         # Note, since attacker 1 and 2 combined use up zeta1/100 + zeta2/100 fraction of hashing power,
         # Remaining nodes needs to distribute the remaining hashing fraction among them based on number of
         # high and low cpu power in honest miners
-        h = (1.0 - ((self.zeta1 / 100.0) + (self.zeta2/100.0))) / (9.0*cnt_high + self.n)
+        h = (1.0 - ((self.zeta1 / 100.0) + (self.zeta2/100.0))) / (9.0*cnt_high + self.n - 2)
         slow_mine_time = self.I / h
 
         # hashing power fraction set for all peers
@@ -227,14 +223,18 @@ class Simulator:
         with open(file, "w") as f:
             f.write(f"Simulation time (in ms): {self.T_sim}\n")
             f.write(f"Number of peers in the network (n): {self.n}\n")
-            f.write(f"Percentage of slow peers (z0): {self.z0}\n")
-            f.write(f"Percentage of peers with low CPU (z1): {self.z1}\n")
+            f.write(f"Percentage of honest slow peers (z0): {self.z0}\n")
+            f.write(f"Percentage of honest peers with low CPU (z1): {self.z1}\n")
+            f.write(f"Percentage of mining power of adversary-1 (zeta1): {self.zeta1}\n")
+            f.write(f"Percentage of mining power of adversary-2 (zeta2): {self.zeta2}\n")
             f.write(f"Mean interarrival time between transactions (in ms) (T_tx): {self.T_tx}\n")
             f.write(f"Mean interarrival time between blocks (in ms) (I): {self.I}\n")
             f.write("==============================================\n")
             f.flush()
             print(f"Generating miner info")
             f.write("ID,Slow|Fast,Low CPU|High CPU\n")
-            for idx in range(1, self.n+1):
+            f.write(f'1,Fast,High CPU\n')
+            f.write(f'2,Fast,High CPU\n')
+            for idx in range(3, self.n+1):
                 f.write(f'{idx},{"Slow" if self.peer_dict[idx].slow else "Fast"},{"Low CPU" if self.peer_dict[idx].CPU_low else "High CPU"}\n')
                 f.flush()

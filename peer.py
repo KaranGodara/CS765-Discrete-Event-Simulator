@@ -6,7 +6,7 @@ import copy
 import datetime
 from transaction import Transaction
 from block import Block
-from tree import TreeNode, Tree
+from tree import Tree
 
 class Peer:
     def __init__(self, ID, slow, T_tx, n, env):

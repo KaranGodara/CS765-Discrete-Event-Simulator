@@ -16,7 +16,7 @@
 ```python3 run.py --help```
 - The above command will display the following:
 ```
-usage: run.py [-h] [--info] [--n N] [--z0 Z0] [--z1 Z1] [--T_tx T_TX] [--I I] [--T_sim T_SIM]
+usage: run.py [-h] [--info] [--n N] [--z0 Z0] [--z1 Z1] [--T_tx T_TX] [--I I] [--T_sim T_SIM] [--zeta1 ZETA1] [--zeta2 ZETA2]
 
 Simulation of a P2P Cryptocurrency Network
 
@@ -24,11 +24,13 @@ options:
   -h, --help     show this help message and exit
   --info         Generate info
   --n N          Number of peers in the network
-  --z0 Z0        Percentage of slow peers
-  --z1 Z1        Percentage of peers with Low CPU
+  --z0 Z0        Percentage of slow honest peers
+  --z1 Z1        Percentage of honest peers with Low CPU
   --T_tx T_TX    Mean interarrival time between transactions (in ms)
   --I I          Mean interarrival time between blocks (in s)
   --T_sim T_SIM  Simulation time (in s)
+  --zeta1 ZETA1  Percentage of mining power of adversary-1
+  --zeta2 ZETA2  Percentage of mining power of adversary-2
 ```
 - Options are given default values, so if you want to run the simulator with the default values, you can simply run:
 ```python3 run.py```
@@ -39,6 +41,8 @@ options:
     - T_tx: 1000
     - I: 25
     - T_sim: 200
+    - zeta1: 40
+    - zeta2: 30
 - The output of the simulator will be stored in the output directory. The following files will be generated:
     - blockchain_{i}.txt: The blockchain of the i-th miner, 1<=i<=n
     - info.txt: The info about the miners if --info flag is used, this file is required for the analyser
@@ -80,6 +84,8 @@ options:
     - [Design_Document.pdf](Design_Document.pdf): The design document of this assignment
     - [simulator.py](simulator.py): The simulator class
     - [peer.py](peer.py): The peer class denoting each peer (miner) in the network
+    - [attacker.py](attacker.py): The attacker class denoting the attacker in the network
+    - [honest.py](honest.py): The honest class denoting the honest peers in the network
     - [peer_link.py](peer_link.py): The peer link class denoting the link between two peers
     - [block.py](block.py): The blocks class denoting the blocks in the blockchain
     - [transaction.py](transaction.py): The transaction class denoting the transactions in the blockchain

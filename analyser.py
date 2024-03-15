@@ -94,8 +94,9 @@ def get_branch_stats(G):
 # This function generates the graph from the blockchain in the file and plots the graph
 def plot_graph(file="output/blockchain_1.txt"):
     G, d, m = read_graph(file)
+    node_color = ["grey" if d[i]==0 else "blue" if d[i]==1 else "orange" if d[i] ==2 else "hotpink" for i in G.nodes()]
     pos = graphviz_layout(G, prog="dot")
-    nx.draw(G, pos, with_labels=True, node_size=200, node_color="hotpink", node_shape="o", alpha=0.8, linewidths=1, font_size=8, font_color="black", font_family="monospace", edge_color="green", width=1, arrows=True, arrowsize=8, arrowstyle="-|>", connectionstyle="arc3")
+    nx.draw(G, pos, with_labels=True, node_size=200, node_color=node_color, node_shape="o", alpha=0.8, linewidths=1, font_size=8, font_color="black", font_family="monospace", edge_color="green", width=1, arrows=True, arrowsize=8, arrowstyle="-|>", connectionstyle="arc3")
     plt.savefig('output/blockchain.png')
 
 
@@ -139,8 +140,8 @@ if __name__ == "__main__":
     # Also store the miner IDs in lists slow_low, fast_low, slow_high, fast_high
     with open(args.info_file, "r") as f:
         lines = f.readlines()
-        sim_params = lines[:6]
-        lines = lines[8:]
+        sim_params = lines[:8]
+        lines = lines[10:]
         miners = [line.strip().split(",") for line in lines]
         miners = {int(line[0]): (line[1], line[2]) for line in miners}
         slow_low = [k for k, v in miners.items() if v[0] == "Slow" and v[1] == "Low CPU"]

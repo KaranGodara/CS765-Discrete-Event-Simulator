@@ -17,7 +17,7 @@ def main():
     parser.add_argument('--I', type=float, default=25, help='Mean interarrival time between blocks (in s)')
     parser.add_argument('--T_sim', type=int, default=200, help='Simulation time (in s)')
     parser.add_argument('--zeta1', type=int, default=40, help='Percentage of mining power of adversary-1')
-    parser.add_argument('--zeta2', type=int, default=40, help='Percentage of mining power of adversary-2')
+    parser.add_argument('--zeta2', type=int, default=30, help='Percentage of mining power of adversary-2')
     # note I is in secs
 
     # Parse the command-line arguments
@@ -71,8 +71,7 @@ def main():
         os.makedirs("output")
 
     # Printing the blockchain of all peers
-    # NEEDS UPDATION SINCE ATTRIBUTES OF MINERS CHANGED
-    # sim.print_blockchain()
+    sim.print_blockchain()
 
     # Generating miner info and simulation's parameters
     if args.info:

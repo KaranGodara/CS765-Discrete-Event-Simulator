@@ -70,7 +70,7 @@ class Tree:
                 f.write("BLOCK ID,TIME STAMP,PARENT ID,MINER,SLOW,LOW_CPU\n")
                 f.flush()
         with open(file, "a") as f:
-            f.write(f"{node.block.block_ID},{node.time_stamp},{node.parent.block.block_ID if node.parent!=None else 'NULL'},{node.block.txn_list[0].miner if len(node.block.txn_list)>0 else 0},{peer_dict[node.block.txn_list[0].miner].slow if len(node.block.txn_list)>0 else 0},{peer_dict[node.block.txn_list[0].miner].CPU_low if len(node.block.txn_list)>0 else 0}\n")
+            f.write(f"{node.block.block_ID},{node.time_stamp},{node.parent.block.block_ID if node.parent!=None else 'NULL'},{node.block.txn_list[0].miner if len(node.block.txn_list)>0 else 0},{peer_dict[node.block.txn_list[0].miner].slow if len(node.block.txn_list)>0 else 0},{peer_dict[node.block.txn_list[0].miner].CPU_low if len(node.block.txn_list)>0 and node.block.txn_list[0].miner > 2 else 1 if len(node.block.txn_list)>0 else 0}\n")
             f.flush()
             q = queue.Queue()
             q.put(node)
@@ -78,5 +78,5 @@ class Tree:
                 curr = q.get()
                 for child in curr.children:
                     q.put(child)
-                    f.write(f"{child.block.block_ID},{child.time_stamp},{child.parent.block.block_ID if child.parent!=None else 'NULL'},{child.block.txn_list[0].miner if len(child.block.txn_list)>0 else 0},{peer_dict[child.block.txn_list[0].miner].slow if len(child.block.txn_list)>0 else 0},{peer_dict[child.block.txn_list[0].miner].CPU_low if len(child.block.txn_list)>0 else 0}\n")
+                    f.write(f"{child.block.block_ID},{child.time_stamp},{child.parent.block.block_ID if child.parent!=None else 'NULL'},{child.block.txn_list[0].miner if len(child.block.txn_list)>0 else 0},{peer_dict[child.block.txn_list[0].miner].slow if len(child.block.txn_list)>0 else 0},{peer_dict[child.block.txn_list[0].miner].CPU_low if len(child.block.txn_list)>0 and child.block.txn_list[0].miner > 2 else 1 if len(child.block.txn_list)>0 else 0}\n")
                     f.flush()
