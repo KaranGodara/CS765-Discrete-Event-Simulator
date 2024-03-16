@@ -63,6 +63,8 @@ class Attacker(Peer):
 
     # should transmit and delete block from pvt chain
     def transmit_pvt_block(self):
+        # Not only transmit but also mark the treenode pas not private
+        self.pvt_chain[0].unmark_private()
         del_node = self.pvt_chain.pop(0)
         self.forward_block(del_node.block)
     
@@ -121,6 +123,8 @@ class Attacker(Peer):
             print(f"BLOCK {blk.block_ID} IS MINED AND RECEIVED AT SELFISH : {self.ID}")
             print(f"Current state at attacker {self.ID}  is {self.lead}")
             self.pvt_chain.append(self.block_to_tree[blk.block_ID])
+            # Marking the node as private
+            self.pvt_chain[-1].mark_private()
             if self.lead == -1:
                 print(f"BLOCK {blk.block_ID} at {self.ID} INITITATED RELEASE OF BLOCK {self.pvt_chain[-1].block.block_ID} FROM PVT CHAIN")
                 self.curr_tree_node = self.block_to_tree[self.pvt_chain[-1].block.block_ID]

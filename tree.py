@@ -19,6 +19,10 @@ class TreeNode:
         # Would store the balance until this block for all peers
         self.balance = defaultdict(int)
 
+        # Marks whether this node is a part of private chain or not
+        # Default is 0
+        self.pvt = 0
+
         if self.parent != None : # Means non-genesis Tree Node
             self.depth = self.parent.depth + 1
             for idx in range(1, n + 1):
@@ -40,6 +44,14 @@ class TreeNode:
     # appending tree node to child list
     def add_child(self, child):
         self.children.append(child)
+
+    # function to mark tree node as private
+    def mark_private(self):
+        self.pvt = 1
+
+    # function to unmark tree node as private
+    def unmark_private(self):
+        self.pvt = 0
 
     def __str__(self):
         if self.parent == None:
