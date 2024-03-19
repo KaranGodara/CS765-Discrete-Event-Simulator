@@ -53,17 +53,19 @@ options:
 ```python3 analyser.py --help```
 - The above command will display the following:
 ```
-usage: analyser.py [-h] [--blkchain BLKCHAIN] [--info_file INFO_FILE] [--only_plot] [--output OUTPUT]
+usage: analyser.py [-h] [--blkchain BLKCHAIN] [--info_file INFO_FILE] [--only_plot] [--output OUTPUT] [--show_private] [--color_same] [--color_miner COLOR_MINER]
 
 Analyser for the blockchain
 
 options:
-  -h, --help            show this help message and exit
-  --blkchain BLKCHAIN   File containing the blockchain
-  --info_file INFO_FILE
-                        File containing info about miners
-  --only_plot           Only plot blockchain tree and exit
-  --output OUTPUT       Output file
+  -h, --help                show this help message and exit
+  --blkchain BLKCHAIN       File containing the blockchain
+  --info_file INFO_FILE     File containing info about miners
+  --only_plot               Only plot blockchain tree and exit
+  --output OUTPUT           Output file
+  --show_private            Show private chain as well in the plot
+  --color_same              Color all nodes same regardless of attacker or honest miner
+  --color_miner COLOR_MINER Color distinctly the blocks mined by the miner with this ID, works only if --color-same is not given
 ```
 - Options are given default values, so if you want to run the analyser with the default values, you can simply run:
 ```python3 analyser.py```
@@ -71,6 +73,7 @@ options:
   - blkchain: output/blockchain_1.txt
   - info_file: output/info.txt
   - output: output/final_stats.txt
+  - color_miner: -1 (Colors distinctly the blocks mined by Attacker-1, Attacker-2 and honest miners)
 - The output of the simulator will be stored in the output directory. The following files will be generated:
     - blockchain.png: The blockchain tree corresponding to the blockchain file
     - final_stats.txt: The final stats of the blockchain if --only_plot flag is not used
