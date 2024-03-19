@@ -221,7 +221,7 @@ class Simulator:
     def generate_info(self, file):
         # print(f"Writing simulation's parameters")
         with open(file, "w") as f:
-            f.write(f"Simulation time (in ms): {self.T_sim}\n")
+            f.write(f"Simulation time (in s): {self.T_sim}\n")
             f.write(f"Number of peers in the network (n): {self.n}\n")
             f.write(f"Percentage of honest slow peers (z0): {self.z0}\n")
             f.write(f"Percentage of honest peers with low CPU (z1): {self.z1}\n")
@@ -233,8 +233,8 @@ class Simulator:
             f.flush()
             print(f"Generating miner info")
             f.write("ID,Slow|Fast,Low CPU|High CPU\n")
-            f.write(f'1,Fast,High CPU\n')
-            f.write(f'2,Fast,High CPU\n')
+            f.write(f'1,Fast,Attacker 1\n')
+            f.write(f'2,Fast,Attacker 2\n')
             for idx in range(3, self.n+1):
                 f.write(f'{idx},{"Slow" if self.peer_dict[idx].slow else "Fast"},{"Low CPU" if self.peer_dict[idx].CPU_low else "High CPU"}\n')
                 f.flush()
