@@ -42,7 +42,7 @@ class Attacker(Peer):
         # now valid transactions have been added to the block
         # Simulating PoW
         to_time = np.random.exponential(scale=(self.block_mine_time))
-        print(f"PRIVATE BLOCK: {self.ID} creation start at {new_block.block_ID} at {self.env.now} TO for {to_time}")
+        # print(f"PRIVATE BLOCK: {self.ID} creation start at {new_block.block_ID} at {self.env.now} TO for {to_time}")
         yield self.env.timeout(to_time)
 
         # now PoW has been simulated
@@ -50,16 +50,16 @@ class Attacker(Peer):
         # that is curr_tree_node is the same or not
         # now checking block's parent ID is same as cur_tree_node.block_ID
         if new_block.parent_ID == self.curr_tree_node.block.block_ID:
-            print(f"11 PRIVATE BLOCK: {self.ID} longest so adding to self read queue {new_block.block_ID} at {self.env.now}")
+            # print(f"11 PRIVATE BLOCK: {self.ID} longest so adding to self read queue {new_block.block_ID} at {self.env.now}")
             # add this block in my tree
             # self.block_receiver(new_block)
             # Adding this to my own read_queue cause now we need to add it to our block chain
             self.read_queue.put(new_block)
         elif len(self.pvt_chain) != 0 and new_block.parent_ID == self.pvt_chain[-1].block.block_ID:
-            print(f"22 PRIVATE BLOCK: {self.ID} longest so adding to self read queue {new_block.block_ID} at {self.env.now}")
+            # print(f"22 PRIVATE BLOCK: {self.ID} longest so adding to self read queue {new_block.block_ID} at {self.env.now}")
             self.read_queue.put(new_block)
-        else: 
-            print(f"PRIVATE BLOCK: {self.ID} && {new_block.block_ID} at {self.env.now} Rejected ")
+        # else: 
+            # print(f"PRIVATE BLOCK: {self.ID} && {new_block.block_ID} at {self.env.now} Rejected ")
 
     # should transmit and delete block from pvt chain
     def transmit_pvt_block(self):
@@ -87,51 +87,51 @@ class Attacker(Peer):
 
         ###################################
         if blk.txn_list[0].miner != self.ID:
-            print(f"BLOCK {blk.block_ID} IS MINED BY HONEST, FOUND AT SELFISH : {self.ID}")
-            print(f"Current state at attacker {self.ID}  is {self.lead}")
+            # print(f"BLOCK {blk.block_ID} IS MINED BY HONEST, FOUND AT SELFISH : {self.ID}")
+            # print(f"Current state at attacker {self.ID}  is {self.lead}")
             # Does it create a new longest chain
             if self.block_to_tree[blk.block_ID].depth <= self.curr_tree_node.depth :
-                print(f"BLOCK {blk.block_ID} at {self.ID} DIDN'T DO AMYTHING CAUSE WAS NOT AT MAX DEPTH")
+                # print(f"BLOCK {blk.block_ID} at {self.ID} DIDN'T DO AMYTHING CAUSE WAS NOT AT MAX DEPTH")
                 return
             else:
                 # lead as -1 is state O dash
                 if self.lead == -1 or self.lead == 0:
-                    print(f"BLOCK {blk.block_ID} at {self.ID} BECAME NEW CURRENT NODE")
+                    # print(f"BLOCK {blk.block_ID} at {self.ID} BECAME NEW CURRENT NODE")
                     self.curr_tree_node = self.block_to_tree[blk.block_ID]
                     self.env.process(self.create_pvt_block())
                     self.lead = 0
                 
                 elif self.lead == 1:
-                    print(f"BLOCK {blk.block_ID} at {self.ID} INITIATED RELEASE OF BLOCK {self.pvt_chain[-1].block.block_ID} FROM PVT CHAIN")
+                    # print(f"BLOCK {blk.block_ID} at {self.ID} INITIATED RELEASE OF BLOCK {self.pvt_chain[-1].block.block_ID} FROM PVT CHAIN")
                     self.curr_tree_node = self.block_to_tree[self.pvt_chain[-1].block.block_ID]
                     self.transmit_pvt_block()
                     self.lead = -1
                 
                 elif self.lead == 2:
-                    print(f"BLOCK {blk.block_ID} at {self.ID} INITIATED RELEASE OF BLOCKS {self.pvt_chain[-1].block.block_ID} and {self.pvt_chain[-2].block.block_ID} FROM PVT CHAIN")
+                    # print(f"BLOCK {blk.block_ID} at {self.ID} INITIATED RELEASE OF BLOCKS {self.pvt_chain[-1].block.block_ID} and {self.pvt_chain[-2].block.block_ID} FROM PVT CHAIN")
                     self.curr_tree_node = self.block_to_tree[self.pvt_chain[-1].block.block_ID]
                     self.transmit_pvt_block()
                     self.transmit_pvt_block()
                     self.lead = 0
 
                 else :
-                    print(f"BLOCK {blk.block_ID} at {self.ID} INITIATED RELEASE OF BLOCKS {self.pvt_chain[-1].block.block_ID} FROM PVT CHAIN lead decreased by 1")
+                    # print(f"BLOCK {blk.block_ID} at {self.ID} INITIATED RELEASE OF BLOCKS {self.pvt_chain[-1].block.block_ID} FROM PVT CHAIN lead decreased by 1")
                     self.lead = self.lead - 1
                     self.curr_tree_node = self.block_to_tree[self.pvt_chain[0].block.block_ID]
                     self.transmit_pvt_block()
         else:
-            print(f"BLOCK {blk.block_ID} IS MINED AND RECEIVED AT SELFISH : {self.ID}")
-            print(f"Current state at attacker {self.ID}  is {self.lead}")
+            # print(f"BLOCK {blk.block_ID} IS MINED AND RECEIVED AT SELFISH : {self.ID}")
+            # print(f"Current state at attacker {self.ID}  is {self.lead}")
             self.pvt_chain.append(self.block_to_tree[blk.block_ID])
             # Marking the node as private
             self.pvt_chain[-1].mark_private()
             if self.lead == -1:
-                print(f"BLOCK {blk.block_ID} at {self.ID} INITITATED RELEASE OF BLOCK {self.pvt_chain[-1].block.block_ID} FROM PVT CHAIN")
+                # print(f"BLOCK {blk.block_ID} at {self.ID} INITITATED RELEASE OF BLOCK {self.pvt_chain[-1].block.block_ID} FROM PVT CHAIN")
                 self.curr_tree_node = self.block_to_tree[self.pvt_chain[-1].block.block_ID]
                 self.transmit_pvt_block()
                 self.lead = 0
                 self.env.process(self.create_pvt_block())
             else:
-                print(f"BLOCK {blk.block_ID} at {self.ID} BECAME PART OF PVT CHAIN")
+                # print(f"BLOCK {blk.block_ID} at {self.ID} BECAME PART OF PVT CHAIN")
                 self.lead = self.lead + 1
                 self.env.process(self.create_pvt_block(self.pvt_chain[-1]))

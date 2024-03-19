@@ -212,10 +212,10 @@ class Simulator:
             self.env.process((self.peer_dict[idx]).create_and_transmit_new_block())
 
     # This function would print the blockchain of all the peers
-    def print_blockchain(self):
+    def print_blockchain(self, output_dir):
         print(f"Printing blockchain")
         for idx in range(1, self.n+1):
-            self.peer_dict[idx].print_blockchain(self.peer_dict)
+            self.peer_dict[idx].print_blockchain(self.peer_dict, output_dir)
 
     # This function would generate info about minors, simulation's parameters and write it to a file
     def generate_info(self, file):

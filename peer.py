@@ -190,7 +190,7 @@ class Peer:
         # now valid transactions have been added to the block
         # Simulating PoW
         to_time = np.random.exponential(scale=(self.block_mine_time))
-        print(f"BLOCK: {self.ID} creation start at {new_block.block_ID} at {self.env.now} TO for {to_time}")
+        # print(f"BLOCK: {self.ID} creation start at {new_block.block_ID} at {self.env.now} TO for {to_time}")
         yield self.env.timeout(to_time)
 
         # now PoW has been simulated
@@ -198,14 +198,14 @@ class Peer:
         # that is curr_tree_node is the same or not
         # now checking block's parent ID is same as cur_tree_node.block_ID
         if(new_block.parent_ID == self.curr_tree_node.block.block_ID):
-            print(f"BLOCK: {self.ID} longest so broadcasting {new_block.block_ID} at {self.env.now}")
+            # print(f"BLOCK: {self.ID} longest so broadcasting {new_block.block_ID} at {self.env.now}")
 
             # add this block in my tree
             # self.block_receiver(new_block)
             # Adding this to my own read_queue cause now we need to add it to our block chain
             self.read_queue.put(new_block)
-        else: 
-            print(f"BLOCK: {self.ID} && {new_block.block_ID} at {self.env.now} Rejected ")
+        # else: 
+        #     print(f"BLOCK: {self.ID} && {new_block.block_ID} at {self.env.now} Rejected ")
 
     # Used to forward the validated block, note blocks are already validated
     # Validated here implies, block is seen for the first time and hence forwarding needs to be done
@@ -243,9 +243,9 @@ class Peer:
             
             else :
                 # Processing block here
-                print(msg, f"BLOCK AT {self.env.now} rcvd at {self.ID}")
+                # print(msg, f"BLOCK AT {self.env.now} rcvd at {self.ID}")
                 self.block_receiver(msg)
 
     # This function would print the blockchain of the current peer
-    def print_blockchain(self, peer_dict):
-        self.blockchain.print_bfs(self.blockchain.root,  peer_dict, f"output/blockchain_{self.ID}.txt")
+    def print_blockchain(self, peer_dict, output_dir):
+        self.blockchain.print_bfs(self.blockchain.root,  peer_dict, f"{output_dir}/blockchain_{self.ID}.txt")
