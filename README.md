@@ -44,6 +44,7 @@ options:
     - T_sim: 10
     - zeta1: 40
     - zeta2: 30
+    - output_dir: output
 - The output of the simulator will be stored in the output directory. The following files will be generated:
     - blockchain_{i}.txt: The blockchain of the i-th miner, 1<=i<=n
     - info.txt: The info about the miners if --info flag is used, this file is required for the analyser
@@ -74,7 +75,7 @@ options:
 - The default values are:
   - blkchain: output/blockchain_1.txt
   - info_file: output/info.txt
-  - output: output/final_stats.txt
+  - output_dir: output
   - color_miner: -1 (Colors distinctly the blocks mined by Attacker-1, Attacker-2 and honest miners)
 - The output of the simulator will be stored in the output directory. The following files will be generated:
     - blockchain.png: The blockchain tree corresponding to the blockchain file
