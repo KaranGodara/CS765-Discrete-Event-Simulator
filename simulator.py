@@ -190,6 +190,11 @@ class Simulator:
                 lnk = Peer_Link(self.peer_dict[idx], self.peer_dict[ngb], self.env)
                 self.peer_dict[idx].update_send_list(lnk)
 
+    def my_timer(self):
+        while True:
+            print("Current time is :", self.env.now)
+            yield self.env.timeout(100)
+    
     def start_simulation(self):
         print("Creating p2p network")
         # Initialising nodes of the network
@@ -210,6 +215,8 @@ class Simulator:
         for idx in range(3, self.n+1):
             # It starts the intial block formation at each peer
             self.env.process((self.peer_dict[idx]).create_and_transmit_new_block())
+
+        self.env.process(self.my_timer())
 
     # This function would print the blockchain of all the peers
     def print_blockchain(self, output_dir):
