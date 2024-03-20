@@ -38,7 +38,7 @@ options:
 - The default values are:
     - n: 50
     - z0: 50
-    - z1: 50
+    - z1: 100
     - T_tx: 1000
     - I: 25
     - T_sim: 200
