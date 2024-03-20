@@ -1,0 +1,139 @@
+Simulation Parameters
+Simulation time (in s): 500
+Number of peers in the network (n): 100
+Percentage of honest slow peers (z0): 50
+Percentage of honest peers with low CPU (z1): 50
+Percentage of mining power of adversary-1 (zeta1): 90
+Percentage of mining power of adversary-2 (zeta2): 0
+Mean interarrival time between transactions (in ms) (T_tx): 100000
+Mean interarrival time between blocks (in ms) (I): 5000.0
+
+Miner Statistics
+Miner ID,Slow/Fast,Low CPU/High CPU,Number of Blocks in Longest Chain,Total Number of Blocks Generated,Ratio
+1,Fast,Attacker 1,4,11,0.36363636363636365
+2,Fast,Attacker 2,0,0,ND
+3,Fast,Low CPU,0,0,ND
+4,Slow,High CPU,0,0,ND
+5,Fast,High CPU,0,0,ND
+6,Fast,High CPU,0,0,ND
+7,Fast,Low CPU,0,0,ND
+8,Slow,Low CPU,0,0,ND
+9,Fast,High CPU,0,0,ND
+10,Fast,High CPU,0,0,ND
+11,Fast,High CPU,0,0,ND
+12,Fast,High CPU,0,0,ND
+13,Slow,High CPU,0,0,ND
+14,Slow,Low CPU,0,0,ND
+15,Slow,Low CPU,0,0,ND
+16,Slow,High CPU,1,2,0.5
+17,Fast,Low CPU,0,0,ND
+18,Slow,Low CPU,0,0,ND
+19,Fast,High CPU,0,0,ND
+20,Slow,Low CPU,0,0,ND
+21,Fast,High CPU,0,0,ND
+22,Slow,High CPU,0,0,ND
+23,Fast,High CPU,0,0,ND
+24,Slow,High CPU,0,0,ND
+25,Slow,High CPU,0,0,ND
+26,Slow,High CPU,0,0,ND
+27,Fast,Low CPU,0,0,ND
+28,Slow,Low CPU,0,0,ND
+29,Slow,High CPU,0,0,ND
+30,Fast,Low CPU,0,0,ND
+31,Fast,High CPU,0,0,ND
+32,Slow,Low CPU,0,0,ND
+33,Slow,Low CPU,0,0,ND
+34,Slow,High CPU,1,1,1.0
+35,Fast,High CPU,0,0,ND
+36,Slow,Low CPU,0,0,ND
+37,Slow,Low CPU,0,0,ND
+38,Slow,High CPU,1,1,1.0
+39,Fast,Low CPU,0,0,ND
+40,Slow,High CPU,0,0,ND
+41,Fast,High CPU,1,1,1.0
+42,Fast,Low CPU,0,0,ND
+43,Slow,High CPU,0,0,ND
+44,Slow,Low CPU,0,0,ND
+45,Slow,High CPU,1,1,1.0
+46,Fast,High CPU,0,0,ND
+47,Fast,Low CPU,0,0,ND
+48,Fast,High CPU,0,0,ND
+49,Slow,High CPU,0,0,ND
+50,Slow,High CPU,0,0,ND
+51,Fast,Low CPU,0,0,ND
+52,Slow,High CPU,0,0,ND
+53,Fast,High CPU,0,0,ND
+54,Fast,High CPU,0,0,ND
+55,Slow,Low CPU,0,0,ND
+56,Slow,Low CPU,0,0,ND
+57,Slow,Low CPU,0,0,ND
+58,Slow,High CPU,0,1,0.0
+59,Slow,Low CPU,0,0,ND
+60,Slow,High CPU,0,0,ND
+61,Fast,Low CPU,0,0,ND
+62,Fast,High CPU,0,0,ND
+63,Slow,High CPU,0,0,ND
+64,Slow,Low CPU,0,0,ND
+65,Fast,Low CPU,0,0,ND
+66,Fast,High CPU,0,0,ND
+67,Fast,High CPU,0,0,ND
+68,Slow,Low CPU,0,0,ND
+69,Fast,High CPU,0,0,ND
+70,Fast,Low CPU,0,0,ND
+71,Slow,Low CPU,0,0,ND
+72,Fast,Low CPU,0,0,ND
+73,Fast,High CPU,0,0,ND
+74,Slow,Low CPU,0,0,ND
+75,Fast,Low CPU,0,0,ND
+76,Slow,High CPU,0,0,ND
+77,Slow,Low CPU,0,0,ND
+78,Fast,High CPU,1,1,1.0
+79,Slow,Low CPU,0,0,ND
+80,Fast,Low CPU,0,0,ND
+81,Slow,Low CPU,0,0,ND
+82,Slow,Low CPU,0,0,ND
+83,Slow,Low CPU,0,0,ND
+84,Fast,High CPU,0,0,ND
+85,Slow,High CPU,0,1,0.0
+86,Slow,High CPU,0,0,ND
+87,Slow,Low CPU,0,0,ND
+88,Fast,Low CPU,0,0,ND
+89,Fast,Low CPU,0,0,ND
+90,Slow,Low CPU,0,0,ND
+91,Fast,High CPU,0,0,ND
+92,Fast,Low CPU,0,0,ND
+93,Slow,High CPU,0,0,ND
+94,Slow,Low CPU,0,0,ND
+95,Fast,Low CPU,1,1,1.0
+96,Slow,Low CPU,0,0,ND
+97,Fast,Low CPU,0,0,ND
+98,Fast,Low CPU,0,0,ND
+99,Slow,High CPU,0,0,ND
+100,Slow,High CPU,0,1,0.0
+[Number] Slow, Low CPU miners: 28
+[Number] Fast, Low CPU miners: 21
+[Number] Slow, High CPU miners: 25
+[Number] Fast, High CPU miners: 24
+[Number] Low CPU miners: 49
+[Number] High CPU miners: 49
+
+Overall Miner Statistics
+[Average ratio] Slow, Low CPU miners: ND
+[Average ratio] Fast, Low CPU miners: 1.0
+[Average ratio] Slow, High CPU miners: 0.5
+[Average ratio] Fast, High CPU miners: 1.0
+[Number] Low CPU miners who did not contribute: 48
+[Number] High CPU miners who did not contribute: 40
+
+Blockchain tree Statistics
+Minimum number of branches: 4
+Maximum number of branches: 7
+Average number of branches: 5.5
+Total number of branches: 2
+
+MPU Node Statistics
+[Number] Total number of blocks in main chain: 12
+[Number] Total number of blocks generated: 23
+[adv] Attacker 1: 0.36363636363636365
+[adv] Attacker 2: ND
+[overall] Overall: 0.5217391304347826
