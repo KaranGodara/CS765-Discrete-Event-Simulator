@@ -1,0 +1,110 @@
+Simulation time (in s): 15
+Number of peers in the network (n): 100
+Percentage of honest slow peers (z0): 50
+Percentage of honest peers with low CPU (z1): 50
+Percentage of mining power of adversary-1 (zeta1): 60
+Percentage of mining power of adversary-2 (zeta2): 0
+Mean interarrival time between transactions (in ms) (T_tx): 10
+Mean interarrival time between blocks (in ms) (I): 250.0
+==============================================
+ID,Slow|Fast,Low CPU|High CPU
+1,Fast,Attacker 1
+2,Fast,Attacker 2
+3,Fast,High CPU
+4,Fast,High CPU
+5,Fast,High CPU
+6,Fast,High CPU
+7,Fast,High CPU
+8,Fast,Low CPU
+9,Slow,Low CPU
+10,Fast,Low CPU
+11,Slow,High CPU
+12,Slow,High CPU
+13,Fast,Low CPU
+14,Slow,High CPU
+15,Fast,High CPU
+16,Fast,High CPU
+17,Fast,High CPU
+18,Slow,High CPU
+19,Fast,High CPU
+20,Slow,Low CPU
+21,Fast,High CPU
+22,Slow,High CPU
+23,Slow,High CPU
+24,Fast,Low CPU
+25,Fast,Low CPU
+26,Slow,High CPU
+27,Slow,High CPU
+28,Fast,High CPU
+29,Fast,Low CPU
+30,Fast,High CPU
+31,Fast,High CPU
+32,Slow,High CPU
+33,Slow,High CPU
+34,Fast,Low CPU
+35,Slow,Low CPU
+36,Fast,High CPU
+37,Slow,High CPU
+38,Slow,High CPU
+39,Fast,Low CPU
+40,Fast,Low CPU
+41,Fast,High CPU
+42,Slow,Low CPU
+43,Fast,Low CPU
+44,Fast,High CPU
+45,Fast,High CPU
+46,Fast,Low CPU
+47,Slow,Low CPU
+48,Fast,Low CPU
+49,Slow,High CPU
+50,Slow,High CPU
+51,Fast,High CPU
+52,Fast,High CPU
+53,Fast,High CPU
+54,Slow,Low CPU
+55,Slow,High CPU
+56,Fast,Low CPU
+57,Slow,Low CPU
+58,Slow,High CPU
+59,Fast,High CPU
+60,Slow,Low CPU
+61,Fast,High CPU
+62,Fast,Low CPU
+63,Slow,High CPU
+64,Fast,Low CPU
+65,Slow,Low CPU
+66,Slow,High CPU
+67,Slow,High CPU
+68,Slow,High CPU
+69,Slow,Low CPU
+70,Fast,High CPU
+71,Slow,Low CPU
+72,Fast,Low CPU
+73,Slow,High CPU
+74,Fast,High CPU
+75,Slow,High CPU
+76,Slow,Low CPU
+77,Slow,High CPU
+78,Slow,Low CPU
+79,Fast,Low CPU
+80,Fast,Low CPU
+81,Slow,Low CPU
+82,Slow,Low CPU
+83,Fast,High CPU
+84,Fast,Low CPU
+85,Fast,Low CPU
+86,Fast,Low CPU
+87,Slow,Low CPU
+88,Fast,Low CPU
+89,Fast,Low CPU
+90,Slow,Low CPU
+91,Fast,High CPU
+92,Fast,Low CPU
+93,Slow,Low CPU
+94,Fast,High CPU
+95,Slow,High CPU
+96,Fast,Low CPU
+97,Slow,Low CPU
+98,Slow,Low CPU
+99,Slow,Low CPU
+100,Fast,Low CPU
