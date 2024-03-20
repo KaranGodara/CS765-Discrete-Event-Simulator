@@ -12,7 +12,7 @@ def main():
     parser.add_argument('--info', action="store_true", help='Generate info')
     parser.add_argument('--n', type=int, default=50, help='Number of peers in the network')
     parser.add_argument('--z0', type=int, default=50, help='Percentage of slow honest peers')
-    parser.add_argument('--z1', type=int, default=50, help='Percentage of honest peers with Low CPU')
+    parser.add_argument('--z1', type=int, default=100, help='Percentage of honest peers with Low CPU')
     parser.add_argument('--T_tx', type=int, default=1000, help='Mean interarrival time between transactions (in ms)')
     parser.add_argument('--I', type=float, default=25, help='Mean interarrival time between blocks (in s)')
     parser.add_argument('--T_sim', type=int, default=200, help='Simulation time (in s)')

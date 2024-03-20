@@ -2,7 +2,7 @@ Simulation Parameters
 Simulation time (in s): 500
 Number of peers in the network (n): 100
 Percentage of honest slow peers (z0): 50
-Percentage of honest peers with low CPU (z1): 50
+Percentage of honest peers with low CPU (z1): 100
 Percentage of mining power of adversary-1 (zeta1): 40
 Percentage of mining power of adversary-2 (zeta2): 30
 Mean interarrival time between transactions (in ms) (T_tx): 100000
@@ -10,130 +10,130 @@ Mean interarrival time between blocks (in ms) (I): 5000.0
 
 Miner Statistics
 Miner ID,Slow/Fast,Low CPU/High CPU,Number of Blocks in Longest Chain,Total Number of Blocks Generated,Ratio
-1,Fast,Attacker 1,14,32,0.4375
-2,Fast,Attacker 2,18,27,0.6666666666666666
-3,Slow,Low CPU,0,0,ND
-4,Fast,Low CPU,0,0,ND
-5,Fast,High CPU,0,0,ND
-6,Fast,Low CPU,0,0,ND
-7,Slow,Low CPU,0,1,0.0
-8,Slow,High CPU,0,0,ND
-9,Fast,High CPU,0,0,ND
-10,Fast,Low CPU,0,0,ND
-11,Fast,Low CPU,0,0,ND
+1,Fast,Attacker 1,7,31,0.22580645161290322
+2,Fast,Attacker 2,20,24,0.8333333333333334
+3,Fast,Low CPU,0,0,ND
+4,Slow,Low CPU,0,0,ND
+5,Fast,Low CPU,0,0,ND
+6,Slow,Low CPU,0,0,ND
+7,Fast,Low CPU,0,0,ND
+8,Fast,Low CPU,0,0,ND
+9,Fast,Low CPU,0,0,ND
+10,Fast,Low CPU,0,2,0.0
+11,Slow,Low CPU,0,1,0.0
 12,Fast,Low CPU,0,0,ND
-13,Fast,High CPU,0,0,ND
-14,Fast,High CPU,0,0,ND
+13,Slow,Low CPU,0,1,0.0
+14,Fast,Low CPU,0,2,0.0
 15,Fast,Low CPU,0,0,ND
-16,Fast,High CPU,0,0,ND
-17,Fast,High CPU,0,0,ND
-18,Fast,Low CPU,0,1,0.0
-19,Slow,Low CPU,0,0,ND
-20,Fast,High CPU,0,2,0.0
-21,Fast,High CPU,0,0,ND
-22,Fast,High CPU,0,0,ND
-23,Fast,High CPU,0,0,ND
-24,Fast,High CPU,0,0,ND
-25,Fast,High CPU,0,2,0.0
-26,Fast,High CPU,0,0,ND
-27,Slow,Low CPU,0,1,0.0
+16,Fast,Low CPU,1,1,1.0
+17,Fast,Low CPU,0,0,ND
+18,Fast,Low CPU,0,0,ND
+19,Fast,Low CPU,0,0,ND
+20,Slow,Low CPU,0,0,ND
+21,Fast,Low CPU,0,0,ND
+22,Slow,Low CPU,0,2,0.0
+23,Fast,Low CPU,0,0,ND
+24,Slow,Low CPU,0,0,ND
+25,Slow,Low CPU,1,2,0.5
+26,Slow,Low CPU,0,0,ND
+27,Slow,Low CPU,0,0,ND
 28,Slow,Low CPU,0,0,ND
 29,Slow,Low CPU,0,0,ND
 30,Slow,Low CPU,0,0,ND
 31,Slow,Low CPU,0,0,ND
-32,Fast,High CPU,0,4,0.0
-33,Fast,High CPU,0,0,ND
-34,Slow,Low CPU,0,0,ND
-35,Fast,High CPU,0,0,ND
-36,Slow,Low CPU,0,0,ND
-37,Slow,High CPU,0,1,0.0
-38,Slow,High CPU,0,2,0.0
-39,Fast,Low CPU,0,0,ND
-40,Fast,Low CPU,0,0,ND
-41,Fast,High CPU,0,0,ND
-42,Fast,Low CPU,0,0,ND
-43,Slow,High CPU,0,0,ND
-44,Slow,High CPU,0,0,ND
-45,Fast,Low CPU,0,0,ND
-46,Fast,Low CPU,0,2,0.0
-47,Fast,High CPU,0,0,ND
-48,Slow,High CPU,0,1,0.0
+32,Fast,Low CPU,0,0,ND
+33,Slow,Low CPU,0,0,ND
+34,Fast,Low CPU,0,0,ND
+35,Fast,Low CPU,0,0,ND
+36,Fast,Low CPU,0,0,ND
+37,Fast,Low CPU,0,0,ND
+38,Fast,Low CPU,0,0,ND
+39,Fast,Low CPU,0,2,0.0
+40,Slow,Low CPU,0,1,0.0
+41,Fast,Low CPU,0,0,ND
+42,Slow,Low CPU,0,0,ND
+43,Fast,Low CPU,0,0,ND
+44,Slow,Low CPU,0,1,0.0
+45,Slow,Low CPU,0,0,ND
+46,Fast,Low CPU,0,1,0.0
+47,Slow,Low CPU,0,0,ND
+48,Slow,Low CPU,0,0,ND
 49,Slow,Low CPU,0,0,ND
-50,Fast,High CPU,0,1,0.0
-51,Slow,High CPU,0,0,ND
+50,Slow,Low CPU,0,0,ND
+51,Slow,Low CPU,0,0,ND
 52,Fast,Low CPU,0,0,ND
-53,Fast,Low CPU,0,1,0.0
-54,Fast,High CPU,0,1,0.0
-55,Slow,High CPU,0,2,0.0
-56,Slow,High CPU,0,0,ND
-57,Slow,Low CPU,0,0,ND
-58,Fast,Low CPU,0,0,ND
-59,Slow,High CPU,0,1,0.0
-60,Slow,High CPU,0,0,ND
-61,Fast,High CPU,0,0,ND
-62,Slow,High CPU,0,1,0.0
+53,Slow,Low CPU,0,0,ND
+54,Fast,Low CPU,0,0,ND
+55,Fast,Low CPU,0,0,ND
+56,Fast,Low CPU,0,0,ND
+57,Fast,Low CPU,0,0,ND
+58,Fast,Low CPU,1,1,1.0
+59,Slow,Low CPU,0,0,ND
+60,Slow,Low CPU,0,0,ND
+61,Slow,Low CPU,0,0,ND
+62,Slow,Low CPU,0,2,0.0
 63,Fast,Low CPU,0,0,ND
-64,Fast,Low CPU,0,0,ND
+64,Slow,Low CPU,0,0,ND
 65,Slow,Low CPU,0,0,ND
 66,Slow,Low CPU,0,0,ND
-67,Fast,Low CPU,0,1,0.0
-68,Fast,High CPU,0,1,0.0
-69,Fast,Low CPU,0,0,ND
-70,Fast,Low CPU,0,0,ND
-71,Slow,Low CPU,0,0,ND
-72,Slow,Low CPU,0,0,ND
-73,Fast,Low CPU,0,0,ND
-74,Fast,High CPU,0,1,0.0
-75,Fast,Low CPU,0,0,ND
-76,Slow,High CPU,0,1,0.0
-77,Fast,High CPU,0,0,ND
-78,Slow,Low CPU,0,0,ND
-79,Slow,Low CPU,0,0,ND
-80,Fast,Low CPU,0,0,ND
-81,Fast,Low CPU,0,0,ND
-82,Fast,Low CPU,0,0,ND
+67,Slow,Low CPU,0,0,ND
+68,Slow,Low CPU,0,1,0.0
+69,Slow,Low CPU,0,1,0.0
+70,Fast,Low CPU,0,2,0.0
+71,Fast,Low CPU,0,0,ND
+72,Fast,Low CPU,0,0,ND
+73,Slow,Low CPU,0,0,ND
+74,Fast,Low CPU,0,0,ND
+75,Slow,Low CPU,0,0,ND
+76,Fast,Low CPU,0,1,0.0
+77,Fast,Low CPU,0,1,0.0
+78,Fast,Low CPU,1,1,1.0
+79,Fast,Low CPU,0,0,ND
+80,Slow,Low CPU,0,0,ND
+81,Slow,Low CPU,0,0,ND
+82,Slow,Low CPU,0,0,ND
 83,Fast,Low CPU,0,0,ND
-84,Slow,High CPU,0,0,ND
-85,Fast,Low CPU,0,0,ND
+84,Fast,Low CPU,0,0,ND
+85,Fast,Low CPU,0,1,0.0
 86,Slow,Low CPU,0,0,ND
-87,Slow,High CPU,0,0,ND
+87,Fast,Low CPU,0,1,0.0
 88,Fast,Low CPU,0,0,ND
-89,Slow,Low CPU,0,0,ND
-90,Fast,Low CPU,0,0,ND
-91,Slow,Low CPU,0,1,0.0
-92,Slow,High CPU,0,1,0.0
-93,Fast,Low CPU,0,0,ND
+89,Fast,Low CPU,0,0,ND
+90,Slow,Low CPU,0,0,ND
+91,Fast,Low CPU,0,1,0.0
+92,Fast,Low CPU,1,1,1.0
+93,Slow,Low CPU,0,1,0.0
 94,Slow,Low CPU,0,0,ND
-95,Fast,Low CPU,0,0,ND
-96,Fast,High CPU,0,1,0.0
+95,Slow,Low CPU,0,0,ND
+96,Fast,Low CPU,0,0,ND
 97,Fast,Low CPU,0,0,ND
 98,Fast,Low CPU,0,0,ND
-99,Slow,High CPU,0,0,ND
-100,Slow,High CPU,0,0,ND
-[Number] Slow, Low CPU miners: 22
-[Number] Fast, Low CPU miners: 33
-[Number] Slow, High CPU miners: 18
-[Number] Fast, High CPU miners: 25
-[Number] Low CPU miners: 55
-[Number] High CPU miners: 43
+99,Slow,Low CPU,0,0,ND
+100,Fast,Low CPU,0,0,ND
+[Number] Slow, Low CPU miners: 46
+[Number] Fast, Low CPU miners: 52
+[Number] Slow, High CPU miners: 0
+[Number] Fast, High CPU miners: 0
+[Number] Low CPU miners: 98
+[Number] High CPU miners: 0
 
 Overall Miner Statistics
-[Average ratio] Slow, Low CPU miners: 0.0
-[Average ratio] Fast, Low CPU miners: 0.0
-[Average ratio] Slow, High CPU miners: 0.0
-[Average ratio] Fast, High CPU miners: 0.0
-[Number] Low CPU miners who did not contribute: 48
-[Number] High CPU miners who did not contribute: 27
+[Average ratio] Slow, Low CPU miners: 0.07692307692307693
+[Average ratio] Fast, Low CPU miners: 0.2222222222222222
+[Average ratio] Slow, High CPU miners: ND
+[Average ratio] Fast, High CPU miners: ND
+[Number] Low CPU miners who did not contribute: 74
+[Number] High CPU miners who did not contribute: 0
 
 Blockchain tree Statistics
 Minimum number of branches: 1
-Maximum number of branches: 20
-Average number of branches: 9.666666666666666
-Total number of branches: 6
+Maximum number of branches: 24
+Average number of branches: 7.714285714285714
+Total number of branches: 7
 
 MPU Node Statistics
 [Number] Total number of blocks in main chain: 33
-[Number] Total number of blocks generated: 91
-[adv] Attacker 1: 0.4375
-[adv] Attacker 2: 0.6666666666666666
-[overall] Overall: 0.3626373626373626
+[Number] Total number of blocks generated: 87
+[adv] Attacker 1: 0.22580645161290322
+[adv] Attacker 2: 0.8333333333333334
+[overall] Overall: 0.3793103448275862
