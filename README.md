@@ -36,12 +36,12 @@ options:
 - Options are given default values, so if you want to run the simulator with the default values, you can simply run:
 ```python3 run.py```
 - The default values are:
-    - n: 50
+    - n: 100
     - z0: 50
     - z1: 100
-    - T_tx: 1000
-    - I: 25
-    - T_sim: 200
+    - T_tx: 10
+    - I: 0.5
+    - T_sim: 10
     - zeta1: 40
     - zeta2: 30
 - The output of the simulator will be stored in the output directory. The following files will be generated:
