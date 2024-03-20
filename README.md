@@ -16,21 +16,22 @@
 ```python3 run.py --help```
 - The above command will display the following:
 ```
-usage: run.py [-h] [--info] [--n N] [--z0 Z0] [--z1 Z1] [--T_tx T_TX] [--I I] [--T_sim T_SIM] [--zeta1 ZETA1] [--zeta2 ZETA2]
+usage: run.py [-h] [--info] [--n N] [--z0 Z0] [--z1 Z1] [--T_tx T_TX] [--I I] [--T_sim T_SIM] [--zeta1 ZETA1] [--zeta2 ZETA2] [--output_dir OUTPUT_DIR]
 
 Simulation of a P2P Cryptocurrency Network
 
 options:
-  -h, --help     show this help message and exit
-  --info         Generate info
-  --n N          Number of peers in the network
-  --z0 Z0        Percentage of slow honest peers
-  --z1 Z1        Percentage of honest peers with Low CPU
-  --T_tx T_TX    Mean interarrival time between transactions (in ms)
-  --I I          Mean interarrival time between blocks (in s)
-  --T_sim T_SIM  Simulation time (in s)
-  --zeta1 ZETA1  Percentage of mining power of adversary-1
-  --zeta2 ZETA2  Percentage of mining power of adversary-2
+  -h, --help                  show this help message and exit
+  --info                      Generate info
+  --n N                       Number of peers in the network
+  --z0 Z0                     Percentage of slow honest peers
+  --z1 Z1                     Percentage of honest peers with Low CPU
+  --T_tx T_TX                 Mean interarrival time between transactions (in ms)
+  --I I                       Mean interarrival time between blocks (in s)
+  --T_sim T_SIM               Simulation time (in s)
+  --zeta1 ZETA1               Percentage of mining power of adversary-1
+  --zeta2 ZETA2               Percentage of mining power of adversary-2
+  --output_dir OUTPUT_DIR     Output directory
 ```
 - Options are given default values, so if you want to run the simulator with the default values, you can simply run:
 ```python3 run.py```
@@ -53,19 +54,20 @@ options:
 ```python3 analyser.py --help```
 - The above command will display the following:
 ```
-usage: analyser.py [-h] [--blkchain BLKCHAIN] [--info_file INFO_FILE] [--only_plot] [--output OUTPUT] [--show_private] [--color_same] [--color_miner COLOR_MINER]
+usage: analyser.py [-h] [--blkchain BLKCHAIN] [--info_file INFO_FILE] [--only_plot] [--output_dir OUTPUT_DIR] [--show_private] [--color_same] [--color_miner COLOR_MINER]
 
 Analyser for the blockchain
 
 options:
-  -h, --help                show this help message and exit
-  --blkchain BLKCHAIN       File containing the blockchain
-  --info_file INFO_FILE     File containing info about miners
-  --only_plot               Only plot blockchain tree and exit
-  --output OUTPUT           Output file
-  --show_private            Show private chain as well in the plot
-  --color_same              Color all nodes same regardless of attacker or honest miner
-  --color_miner COLOR_MINER Color distinctly the blocks mined by the miner with this ID, works only if --color-same is not given
+  -h, --help                  show this help message and exit
+  --blkchain BLKCHAIN         File containing the blockchain
+  --info_file INFO_FILE       File containing info about miners
+  --only_plot                 Only plot blockchain tree and exit
+  --output_dir OUTPUT_DIR     Output directory
+  --show_private              Show private chain as well in the plot
+  --color_same                Color all nodes same regardless of attacker or honest miner
+  --color_miner COLOR_MINER   Color distinctly the blocks mined by the miner with this ID, works only if --color-same is not given
+
 ```
 - Options are given default values, so if you want to run the analyser with the default values, you can simply run:
 ```python3 analyser.py```
